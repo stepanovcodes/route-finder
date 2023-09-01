@@ -28,9 +28,8 @@ const LocationSchema = new Schema(
         },
         message:
           'Coordinates must be an array of two numbers in "longitude,latitude" order.',
-      },
-    },
-    title: String,
+      }
+    }
   },
   { timestamps: true }
 );

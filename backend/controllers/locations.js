@@ -17,7 +17,7 @@ async function index(req, res, next) {
     res.status(200).json(await Location.find({}));
   } catch (error) {
     //send error
-    res.status(400).json(error);
+    res.status(400).json({ error: error.message });
   }
 }
 
@@ -28,7 +28,7 @@ async function create(req, res, next) {
     res.status(201).json(await Location.create(req.body));
   } catch (error) {
     //send error
-    res.status(400).json(error);
+    res.status(400).json({ error: error.message });
   }
 }
 
@@ -39,7 +39,7 @@ async function show(req, res, next) {
     res.status(200).json(await Location.findById(req.params.id));
   } catch (error) {
     //send error
-    res.status(400).json(error);
+    res.status(400).json({ error: error.message });
   }
 }
 
@@ -50,7 +50,7 @@ async function destroy(req, res) {
       .status(204)
       .json(await Location.findOneAndDelete({ _id: req.params.id }));
   } catch (error) {
-    res.status(400).json(error);
+    res.status(400).json({ error: error.message });
   }
 }
 
@@ -63,7 +63,7 @@ async function update(req, res) {
         await Location.findByIdAndUpdate(req.params.id, req.body, { new: true })
       );
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({ error: error.message });
   }
 }
 
