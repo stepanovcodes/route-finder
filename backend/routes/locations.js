@@ -14,15 +14,15 @@ const locationsCtrl = require('../controllers/locations')
 // PEOPLE INDEX ROUTE
 router.get("/", locationsCtrl.index);
 
-// PEOPLE CREATE ROUTE
+// LOCATIONS CREATE ROUTE
 router.post("/", locationsCtrl.create);
 
-// PEOPLE SHOW ROUTE
+// LOCATIONS SHOW ROUTE
 router.get("/:id", locationsCtrl.show);
-// PEOPLE DELETE ROUTE
+// LOCATIONS DELETE ROUTE
 router.delete("/:id", locationsCtrl.delete);
 
-// PEOPLE UPDATE ROUTE
+// LOCATIONS UPDATE ROUTE
 router.put("/:id", locationsCtrl.update);
 
 module.exports = router
