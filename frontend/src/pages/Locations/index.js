@@ -1,50 +1,56 @@
 import { useState, useEffect } from "react";
 import { Spinner } from "@fluentui/react-components";
-import "./Locations.css"
+import { getLocations } from "../../utilities/locations-service";
+import "./Locations.css";
 
 const Locations = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [locations, setLocations] = useState([]);
 
-  const BASE_URL = "http://localhost:4000/locations";
-
-  const getLocations = async () => {
+  async function handleRequest() {
     try {
-      const response = await fetch(BASE_URL);
-      const allLocations = await response.json();
-      setLocations(allLocations);
-      setIsLoading(false);
+      const locationsData = await getLocations();
+      if (locationsData.length) {
+        // console.log(locationsData);
+        setLocations(locationsData);
+        setIsLoading(false);
+      } else {
+        setIsLoading(false);
+        throw Error(locationsData);
+      }
     } catch (err) {
-      console.log({ error: err.message });
+      console.log({ err: err.message });
     }
-  };
+  }
 
   useEffect(() => {
-    getLocations();
+    handleRequest();
   }, []);
 
   const loaded = () => {
-    return locations?.map((location) => {
-      return (
-        <div key={location._id}>
-          <h3>{location.name}</h3>
-          <p>{location.coordinates}</p>
-        </div>
-      );
-    });
+    return (
+      <section className="locations-list">
+        {locations?.map((location) => {
+          return (
+            <div key={location._id}>
+              <h3>{location.name}</h3>
+              <p>{location.coordinates}</p>
+            </div>
+          );
+        })}
+      </section>
+    );
   };
 
   const loading = () => (
-    <div className="locations-list">
-      <Spinner labelPosition="below" label="Getting things ready..." size="huge" />
-    </div>
+    <Spinner
+      labelPosition="below"
+      label="Getting things ready..."
+      size="huge"
+    />
   );
 
-  return (
-    <section className="locations-list">
-      {isLoading ? loading() : loaded()}
-    </section>
-  );
+  return isLoading ? loading() : loaded();
 };
 
 export default Locations;
