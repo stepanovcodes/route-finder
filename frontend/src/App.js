@@ -1,7 +1,6 @@
 import {
   FluentProvider,
   webLightTheme,
-  Button,
 } from "@fluentui/react-components";
 import "./App.css";
 import Header from "./components/Header";
