@@ -21,6 +21,10 @@ const CapacitySchema = new Schema(
     },
     boxes: {
       type: Number,
+      validate: {
+        validator: Number.isInteger, // Custom validator to check if it's an integer
+        message: 'Duration must be an integer.',
+      },
     },
   },
   { timestamps: true }

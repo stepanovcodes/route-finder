@@ -23,6 +23,10 @@ const BreakSchema = new Schema(
     duration: {
       type: Number,
       required: true,
+      validate: {
+        validator: Number.isInteger, // Custom validator to check if it's an integer
+        message: 'Duration must be an integer.',
+      },
     },
   },
   { timestamps: true }
