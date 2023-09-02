@@ -17,8 +17,14 @@ const express = require("express");
 // create application object
 const app = express();
 
-// import people router
+// import routers
 const locationsRouter = require("./routes/locations");
+const capacitiesRouter = require("./routes/capacities");
+const capabilitiesRouter = require("./routes/capabilities");
+const breaksRouter = require("./routes/breaks");
+const vehiclesRouter = require("./routes/vehicles");
+const servicesRouter = require("./routes/services");
+const shipmentsRouter = require("./routes/shipments");
 
 const cors = require("cors");
 const morgan = require("morgan");
@@ -31,9 +37,20 @@ app.use(express.json()); // parse json bodies - this will run before our request
 app.use(cors()); // to minimize cors errors, open access to all origins
 app.use(morgan("dev")); // logging for development
 
-// all requests for endpoints that begin with '/people'
+// all requests for endpoints that begin with '/locations'
 app.use("/locations", locationsRouter);
-
+// all requests for endpoints that begin with '/capacities'
+app.use("/capacities", capacitiesRouter);
+// all requests for endpoints that begin with '/capabilities'
+app.use("/capabilities", capabilitiesRouter);
+// all requests for endpoints that begin with '/breaks'
+app.use("/breaks", breaksRouter);
+// all requests for endpoints that begin with '/vehicles'
+app.use("/vehicles", vehiclesRouter);
+// all requests for endpoints that begin with '/services'
+app.use("/services", servicesRouter);
+// all requests for endpoints that begin with '/shipments'
+app.use("/shipments", shipmentsRouter);
 ///////////////////////////////
 // ROUTES
 ////////////////////////////////
