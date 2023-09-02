@@ -35,7 +35,7 @@ const VehicleSchema = new Schema(
         ref: "Capacity",
     },
     capabilities: {
-        type: Schema.Types.ObjectId,
+        type: [Schema.Types.ObjectId],
         ref: "Capability",
     },
     earliest_start: {
@@ -45,7 +45,7 @@ const VehicleSchema = new Schema(
         type: Date,
     },
     breaks: {
-        type: Schema.Types.ObjectId,
+        type: [Schema.Types.ObjectId],
         ref: "Break",
     },
     loading_policy: {
