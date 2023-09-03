@@ -10,7 +10,7 @@ import Main from "./components/Main";
 function App() {
   return (
     <FluentProvider theme={webLightTheme}>
-      <div className="App min-h-screen flex flex-col">
+      <div className="App min-h-screen flex flex-col bg-white">
         <Header />
         <Main />
       </div>

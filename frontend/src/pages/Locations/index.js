@@ -43,11 +43,13 @@ const Locations = (props) => {
   };
 
   const loading = () => (
-    <Spinner
-      labelPosition="below"
-      label="Getting things ready..."
-      size="huge"
-    />
+    <div className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+      <Spinner
+        labelPosition="below"
+        label="Getting locations ready..."
+        // size="huge"
+      />
+    </div>
   );
 
   return isLoading ? loading() : loaded();
