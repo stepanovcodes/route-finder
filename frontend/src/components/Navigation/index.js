@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useRef, useEffect } from 'react'
 import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
 import {
   Bars3Icon,
@@ -30,6 +30,35 @@ function classNames(...classes) {
 
 export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const popoverRef = useRef(null);
+
+  function togglePopover() {
+    setIsPopoverOpen(!isPopoverOpen);
+  }
+
+  function closePopover() {
+    setIsPopoverOpen(false);
+  }
+
+  // Add an event listener to detect clicks outside of the Popover.Panel
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (popoverRef.current && !popoverRef.current.contains(event.target)) {
+        closePopover();
+      }
+    }
+
+    if (isPopoverOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isPopoverOpen]);
 
   return (
     <header className="bg-white">
@@ -54,12 +83,12 @@ export default function Navigation() {
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
           <Popover className="relative">
-            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900" onClick={togglePopover}>
               Input
               <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
             </Popover.Button>
-
             <Transition
+              show={isPopoverOpen}
               as={Fragment}
               enter="transition ease-out duration-200"
               enterFrom="opacity-0 translate-y-1"
@@ -67,8 +96,9 @@ export default function Navigation() {
               leave="transition ease-in duration-150"
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
+              onExited={closePopover}
             >
-              <Popover.Panel className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
+              <Popover.Panel ref={popoverRef} className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
                 <div className="p-4">
                   {inputs.map((item) => (
                     <div
@@ -79,7 +109,7 @@ export default function Navigation() {
                         <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
                       </div>
                       <div className="flex-auto">
-                        <Link to={item.href} className="block font-semibold text-gray-900">
+                        <Link to={item.href} className="block font-semibold text-gray-900" onClick={togglePopover}>
                         {/* <a href={item.href} className="block font-semibold text-gray-900"> */}
                           {item.name}
                           <span className="absolute inset-0" />
