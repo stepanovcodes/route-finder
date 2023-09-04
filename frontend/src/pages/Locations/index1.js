@@ -2,13 +2,10 @@ import { useState, useEffect } from "react";
 import { Spinner } from "@fluentui/react-components";
 import { getLocations } from "../../utilities/locations-service";
 import "./Locations.css";
-import LocationList from '../../components/LocationList'
-import Empty from '../../components/Empty'
 
 const Locations = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [locations, setLocations] = useState([]);
-  const title = "Locations";
 
   async function handleRequest() {
     try {
@@ -31,7 +28,18 @@ const Locations = (props) => {
   }, []);
 
   const loaded = () => {
-    return locations ? <LocationList locations={locations} /> : <Empty title={title} />
+    return (
+      <section className="locations-list">
+        {locations?.map((location) => {
+          return (
+            <div key={location._id}>
+              <h3>{location.name}</h3>
+              <p>{location.coordinates}</p>
+            </div>
+          );
+        })}
+      </section>
+    );
   };
 
   const loading = () => (
