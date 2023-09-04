@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Spinner } from "@fluentui/react-components";
 import { getLocations } from "../../utilities/locations-service";
-import "./Locations.css";
 import LocationList from '../../components/LocationList'
 import Empty from '../../components/Empty'
 

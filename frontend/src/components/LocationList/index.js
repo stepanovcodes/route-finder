@@ -1,24 +1,18 @@
-// import { useState} from "react";
+import { useState} from "react";
 import LocationItem from '../LocationItem';
 
 
 function LocationList({locations}) {
-    // const [items, setItems] = useState([
-    //   { id: 1, name: 'Item 1', latitude: 1.234, longitude: 5.678 },
-    //   { id: 2, name: 'Item 2', latitude: 2.345, longitude: 6.789 },
-    // ]);
+    const [hideIcons, setHideIcons] = useState(false);
   
-    const handleEditItem = (editedItem) => {
-      // Update the item in the list with the edited values
+    const handleUpdateItem = (editedItem) => {
       console.log("handleEditItem initiated")
-    //   setItems((prevItems) =>
-    //     prevItems.map((item) =>
-    //       item.id === editedItem.id ? { ...item, ...editedItem } : item
-    //     )
-    //   );
     };
+    const handleEdit = (isEditing) => {
+        isEditing ? setHideIcons(true) : setHideIcons(false)
+      };
 
-    // console.log(locations);
+
   
     return (
         <>
@@ -41,17 +35,17 @@ function LocationList({locations}) {
         </thead>
         <tbody>
         {locations.map((location) => (
-          <tr key={location._id} className="p-4 mb-4">    
           <LocationItem
             key={location._id}
+            id={location._id}
             name={location.name}
             latitude={location.coordinates[1]}
             longitude={location.coordinates[0]}
-            onEdit={handleEditItem}
+            onUpdate={handleUpdateItem}
+            onEdit={handleEdit}
+            hideIcons={hideIcons}
           />
-          </tr>
         ))}
-        
         </tbody>
       </table>
       </>
