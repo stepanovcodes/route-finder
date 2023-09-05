@@ -6,12 +6,13 @@ import {
   deleteLocation,
   updateLocation,
 } from "../../utilities/locations-service";
-import LocationList from "../../components/LocationList";
+import List from "../../components/List";
 
 const Locations = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [locations, setLocations] = useState([]);
   const title=`locations`;
+  const headers=["name","latitude","longitude"];
 
   async function handleGet() {
     try {
@@ -30,7 +31,10 @@ const Locations = (props) => {
 
   async function handleCreate(newRow) {
     try {
-      await createLocation(newRow);
+      await createLocation({
+        name: newRow.name,
+        coordinates: [newRow.longitude, newRow.latitude],
+      });
       handleGet();
     } catch (err) {
       console.log({ err: err.message });
@@ -46,9 +50,12 @@ const Locations = (props) => {
     }
   }
 
-  async function handleUpdate(id, editRow) {
+  async function handleUpdate(id, editedRow) {
     try {
-      await updateLocation(id, editRow);
+      await updateLocation(id, {
+        name: editedRow.name,
+        coordinates: [editedRow.longitude, editedRow.latitude],
+      });
       handleGet();
     } catch (err) {
       console.log({ err: err.message });
@@ -63,11 +70,12 @@ const Locations = (props) => {
     return (
       <>
         <h1 className="text-2xl font-bold tracking-tight">{title.toUpperCase()}</h1>
-        <LocationList
-          locations={locations}
+        <List
+          inputArray={locations}
           handleCreate={handleCreate}
           handleDelete={handleDelete}
           handleUpdate={handleUpdate}
+          headers={headers}
         />
       </>
     );

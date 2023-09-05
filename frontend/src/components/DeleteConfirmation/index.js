@@ -9,7 +9,7 @@ import {
   Button,
 } from "@fluentui/react-components";
 
-export default function DeleteConfirmation({ name, isDeleteConfirmationOpen,closeDialog,handleConfirmClick}) {
+export default function DeleteConfirmation({ name, isDeleteConfirmationOpen,closeDialog,handleDeleteClick}) {
 
   return (
     <Dialog open={isDeleteConfirmationOpen} onClose={closeDialog}>
@@ -23,7 +23,7 @@ export default function DeleteConfirmation({ name, isDeleteConfirmationOpen,clos
             <DialogTrigger disableButtonEnhancement>
               <Button appearance="secondary" onClick={closeDialog}>Close</Button>
             </DialogTrigger>
-            <Button appearance="primary" onClick={handleConfirmClick}>Delete</Button>
+            <Button appearance="primary" onClick={handleDeleteClick}>Delete</Button>
           </DialogActions>
         </DialogBody>
       </DialogSurface>
