@@ -4,7 +4,7 @@ import LocationItem from "../LocationItem";
 import NewLocation from "../NewLocation";
 import Alert from "../../components/Alert";
 
-function LocationList({ locations, handleSubmit, handleDelete, handleUpdate }) {
+function LocationList({ locations, handleCreate, handleDelete, handleUpdate }) {
   const [hideIcons, setHideIcons] = useState(false);
   const [isValid, setIsValid] = useState(true);
 //   const [newRow, setNewRow] = useState(null);
@@ -17,14 +17,7 @@ function LocationList({ locations, handleSubmit, handleDelete, handleUpdate }) {
     setIsValid(isValidValue)
   }
 
-//   function handleAddRow() {
-//     handleSubmit(newRow);
-//   }
 
-//   function handleNewRowChange(newRowCurrent) {
-//     setNewRow(newRowCurrent);
-//   };
-// console.log(newRow);
 
   return (
     <>
@@ -62,7 +55,7 @@ function LocationList({ locations, handleSubmit, handleDelete, handleUpdate }) {
             />
           ))}
         
-        <NewLocation /*handleNewRowChange={handleNewRowChange}*/ handleSubmit={handleSubmit} handleValidation={handleValidation} />
+        <NewLocation /*handleNewRowChange={handleNewRowChange}*/ handleCreate={handleCreate} handleValidation={handleValidation} />
         </tbody>
       </table>
       {!isValid ? <Alert type="error" message="This is an error message." handleValidation={handleValidation}/> : ""}

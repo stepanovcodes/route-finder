@@ -11,8 +11,9 @@ import LocationList from "../../components/LocationList";
 const Locations = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [locations, setLocations] = useState([]);
+  const title=`locations`;
 
-  async function handleRequest() {
+  async function handleGet() {
     try {
       const locationsData = await getLocations();
       if (locationsData.length) {
@@ -27,10 +28,10 @@ const Locations = (props) => {
     }
   }
 
-  async function handleSubmit(newRow) {
+  async function handleCreate(newRow) {
     try {
       await createLocation(newRow);
-      handleRequest();
+      handleGet();
     } catch (err) {
       console.log({ err: err.message });
     }
@@ -38,9 +39,8 @@ const Locations = (props) => {
 
   async function handleDelete(id) {
     try {
-      //   console.log(id)
       await deleteLocation(id);
-      handleRequest();
+      handleGet();
     } catch (err) {
       console.log({ err: err.message });
     }
@@ -49,31 +49,26 @@ const Locations = (props) => {
   async function handleUpdate(id, editRow) {
     try {
       await updateLocation(id, editRow);
-      handleRequest();
+      handleGet();
     } catch (err) {
       console.log({ err: err.message });
     }
   }
 
   useEffect(() => {
-    handleRequest();
+    handleGet();
   }, []);
 
   const loaded = () => {
     return (
       <>
+        <h1 className="text-2xl font-bold tracking-tight">{title.toUpperCase()}</h1>
         <LocationList
           locations={locations}
-          handleSubmit={handleSubmit}
+          handleCreate={handleCreate}
           handleDelete={handleDelete}
           handleUpdate={handleUpdate}
         />
-        {/* <div>
-          <Alert type="success" message="This is a success message." />
-          <Alert type="error" message="This is an error message." />
-          <Alert type="warning" message="This is a warning message." />
-          <Alert type="info" message="This is an info message." />
-        </div> */}
       </>
     );
   };
@@ -82,8 +77,7 @@ const Locations = (props) => {
     <div className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
       <Spinner
         labelPosition="below"
-        label="Getting locations ready..."
-        // size="huge"
+        label={`Getting ${title} ready...`}
       />
     </div>
   );

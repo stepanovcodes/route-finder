@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@fluentui/react-components";
 
-function NewLocation(/*{ handleNewRowChange }*/ { handleSubmit, handleValidation}) {
+function NewLocation(/*{ handleNewRowChange }*/ { handleCreate, handleValidation}) {
   const [newRow, setNewRow] = useState({
     name: "",
     latitude: "",
@@ -46,7 +46,7 @@ function NewLocation(/*{ handleNewRowChange }*/ { handleSubmit, handleValidation
     // console.log(`isNameValid = ${isNameValid}, isLatitudeValid = ${isLatitudeValid}, isLongitudeValid = ${isLongitudeValid}`)
     if (isNameValid && isLatitudeValid && isLongitudeValid) {
       handleValidation(true)
-    handleSubmit({
+    handleCreate({
       name: newRow.name,
       coordinates: [newRow.longitude, newRow.latitude],
     });
