@@ -43,13 +43,13 @@ Done by Aleksandr (Alex) Stepanov
  Route name | CRUD operation | URL endpoint | Module name | Controller Action | Notes |
 |----------|----------|----------|----------|----------|----------|
 
-## JSON sample from Mapbox Optimization API v2
+## JSON samples from Mapbox Optimization API v2
 
 [Optimization API v2 documentation](https://docs.mapbox.com/api/navigation/optimization/)
 
 ## Component Tree
 
-## Sprint board
+## Trello Sprint Board
 
 Trello sprint board [link](https://trello.com/invite/b/PcfGsH7j/ATTI7b7c87f894baa428babcfacad30713a0625CD735/route-finder)
 
