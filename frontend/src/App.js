@@ -1,24 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  FluentProvider,
+  webLightTheme,
+} from "@fluentui/react-components";
+import "./App.css";
+import Header from "./components/Header";
+import Main from "./components/Main";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <FluentProvider theme={webLightTheme}>
+      <div className="App min-h-screen flex flex-col bg-white">
+        <Header />
+        <Main />
+      </div>
+    </FluentProvider>
   );
 }
 
