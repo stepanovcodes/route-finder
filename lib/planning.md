@@ -4,11 +4,7 @@ Done by Aleksandr (Alex) Stepanov
 
 ## Project Choice - Route Finder
 
-"Route Finder" project is designed to help users submit routing problems to Mapbox.com via an API and then visualize the solutions on a map. This type of project can be very useful for various applications, such as route planning, navigation, logistics, or any scenario where you need to find optimal routes between locations.
-
-## Sprint board
-
-Trello sprint board [link](https://trello.com/b/PcfGsH7j/route-finder)
+"Route Finder" project is designed to help users submit routing problems to Mapbox.com via an API and then visualize the solutions on a map. The project can be very useful for various applications, such as route planning, navigation, logistics, or any scenario where you need to find optimal routes between locations.
 
 ## Wireframes
 
@@ -26,7 +22,7 @@ Trello sprint board [link](https://trello.com/b/PcfGsH7j/route-finder)
 
 ## Models/Schemas
 
-### Primary Schema: RoutingPronlem
+### Primary Schema: RoutingProblem
 
 | Property | Type | Validations | Default Value |
 |----------|----------|----------|----------|
@@ -36,13 +32,6 @@ Trello sprint board [link](https://trello.com/b/PcfGsH7j/route-finder)
 
 | Property | Type | Validations | Default Value |
 |----------|----------|----------|----------|
-
-
-### Seconadary Schema: Capacity
-
-| Property | Type | Validations | Default Value |
-|----------|----------|----------|----------|
-
 
 ## Entity Relationship Diagram
 
@@ -59,6 +48,10 @@ Trello sprint board [link](https://trello.com/b/PcfGsH7j/route-finder)
 [Optimization API v2 documentation](https://docs.mapbox.com/api/navigation/optimization/)
 
 ## Component Tree
+
+## Sprint board
+
+Trello sprint board [link](https://trello.com/invite/b/PcfGsH7j/ATTI7b7c87f894baa428babcfacad30713a0625CD735/route-finder)
 
 ## User Stories
 
