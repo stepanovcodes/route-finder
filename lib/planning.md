@@ -10,7 +10,7 @@ Done by Aleksandr (Alex) Stepanov
 
 ### Locations page
 
-![Locations page](../assets/Theme_Index.jpg)
+![Locations page](../assets/Location_Index.png)
 
 ### Create Routing Problem Page
 
@@ -35,7 +35,7 @@ Done by Aleksandr (Alex) Stepanov
 
 ## Entity Relationship Diagram
 
-![Route Finder ERD](../assets/Theme%20Generator%20ERD.png)
+![Route Finder ERD](../assets/Route_Finder_ERD.png)
 
 [ERD on Lucid.app](https://lucid.app/lucidchart/cf946bce-6a36-486c-b658-4346058941cc/edit?invitationId=inv_fdc0247d-4a8b-4d90-98bd-5451d58dcc01)
 
