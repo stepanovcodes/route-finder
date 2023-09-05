@@ -21,7 +21,7 @@ function List({
         <thead>
           <tr>
             {headers.map((header) => (
-              <th className="px-3 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              <th key={header} className="px-3 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                 {header.toUpperCase()}
               </th>
             ))}

@@ -60,13 +60,13 @@ function NewRowItem({ handleCreate, headers}) {
     <>
       <tr className="group p-4 mb-4">
       {headers.map((header) => (
-            <td className=" px4 py-2 whitespace-no-wrap">
+            <td key={header} className=" px4 py-2 whitespace-no-wrap">
               <input
                 name={header}
                 type={
-                  header === "latitude" || header === "longitude"
-                    ? "number"
-                    : "text"
+                  header === "name"
+                    ? "text"
+                    : "number"
                 }
                 className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500"
                 value={newRow[header]}

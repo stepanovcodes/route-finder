@@ -121,9 +121,9 @@ function Item({
               <input
                 name={header}
                 type={
-                  header === "latitude" || header === "longitude"
-                    ? "number"
-                    : "text"
+                  header === "name"
+                    ? "text"
+                    : "number"
                 }
                 className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500"
                 value={editedRow[header]}
@@ -162,7 +162,7 @@ function Item({
           onMouseLeave={() => setIsHovered(false)}
         >
           {headers.map((header) => (
-            <td className=" px4 py-2 whitespace-no-wrap border-b">
+            <td key={header} className=" px4 py-2 whitespace-no-wrap border-b">
               <div className="w-full px-2 py-2 border-2 border-white rounded">
                 {editedRow[header]}
               </div>

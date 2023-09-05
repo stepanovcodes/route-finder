@@ -16,13 +16,13 @@ const Capacities = (props) => {
 
   async function handleGet() {
     try {
-      const locationsData = await getCapacities();
-      if (locationsData.length) {
-        setCapacities(locationsData);
+      const capacititesData = await getCapacities();
+      if (capacititesData.length) {
+        setCapacities(capacititesData);
         setIsLoading(false);
       } else {
         setIsLoading(false);
-        throw Error(locationsData);
+        throw Error(capacititesData);
       }
     } catch (err) {
       console.log({ err: err.message });
@@ -31,10 +31,7 @@ const Capacities = (props) => {
 
   async function handleCreate(newRow) {
     try {
-      await createCapacity({
-        name: newRow.name,
-        coordinates: [newRow.longitude, newRow.latitude],
-      });
+      await createCapacity(newRow);
       handleGet();
     } catch (err) {
       console.log({ err: err.message });
@@ -52,10 +49,7 @@ const Capacities = (props) => {
 
   async function handleUpdate(id, editedRow) {
     try {
-      await updateCapacity(id, {
-        name: editedRow.name,
-        coordinates: [editedRow.longitude, editedRow.latitude],
-      });
+      await updateCapacity(id, editedRow);
       handleGet();
     } catch (err) {
       console.log({ err: err.message });
