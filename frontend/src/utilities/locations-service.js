@@ -9,7 +9,39 @@ export async function getLocations() {
     return data;
   } catch (err) {
     console.log(err);
-    return err;
+    throw new Error(err)
   }
 }
+
+export async function createLocation(data){
+    try {
+        const newLocation = await locationsAPI.create(data)
+        return newLocation
+    }catch(err){
+        console.log(err)
+        throw new Error(err)
+    }
+}
+
+
+export async function deleteLocation(id) {
+    try {
+      const deletedLocation = await locationsAPI.destroy(id);
+      return deletedLocation;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+
+export async function updateLocation(id,data){
+    try {
+        const updatedLocation = await locationsAPI.update(id,data)
+        return updatedLocation
+    }catch(err){
+        throw err
+    }
+}
+
+  
 

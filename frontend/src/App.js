@@ -3,7 +3,6 @@ import {
   webLightTheme,
 } from "@fluentui/react-components";
 import "./App.css";
-import "./index.css";
 import Header from "./components/Header";
 import Main from "./components/Main";
 

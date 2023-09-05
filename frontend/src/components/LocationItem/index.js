@@ -7,12 +7,26 @@ import {
 } from "@heroicons/react/24/outline";
 import DeleteConfirmation from "../../components/DeleteConfirmation";
 
-function LocationItem({ id, name, latitude, longitude, onUpdate, onEdit,hideIcons }) {
+function LocationItem({
+  id,
+  name,
+  latitude,
+  longitude,
+  onEdit,
+  hideIcons,
+  handleDelete,
+  handleUpdate,
+}) {
   const [isHovered, setIsHovered] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [editedName, setEditedName] = useState(name);
-  const [editedLatitude, setEditedLatitude] = useState(latitude);
-  const [editedLongitude, setEditedLongitude] = useState(longitude);
+  const [editedRow, setEditedRow] = useState({
+    name: name,
+    latitude: latitude,
+    longitude: longitude,
+  });
+  //   const [editedName, setEditedName] = useState(name);
+  //   const [editedLatitude, setEditedLatitude] = useState(latitude);
+  //   const [editedLongitude, setEditedLongitude] = useState(longitude);
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] =
     useState(false);
 
@@ -21,18 +35,60 @@ function LocationItem({ id, name, latitude, longitude, onUpdate, onEdit,hideIcon
     onEdit(true);
   };
 
+  const handleChange = (e) => {
+    setEditedRow({ ...editedRow, [e.target.name]: e.target.value });
+    // console.log(e.target.name);
+    // Custom validation logic
+      if (e.target.name === "latitude") {
+        if (isNaN(e.target.value) || parseFloat(e.target.value) < -90 || parseFloat(e.target.value) > 90) {
+          // Invalid latitude
+          e.target.setCustomValidity("Latitude must be between -90 and 90.");
+        } else {
+          // Valid latitude
+          e.target.setCustomValidity("");
+        }
+      } else if (e.target.name === "longitude") {
+        if (isNaN(e.target.value) || parseFloat(e.target.value) < -180 || parseFloat(e.target.value) > 180) {
+          // Invalid latitude
+          e.target.setCustomValidity("Longitude must be between -180 and 180.");
+        } else {
+          // Valid latitude
+          e.target.setCustomValidity("");
+        }
+      } else if (!e.target.value) {
+        e.target.setCustomValidity(`${e.target.name} required.`)
+      }
+  };
+
   const handleSaveClick = () => {
-    onUpdate({
-      name: editedName,
-      latitude: editedLatitude,
-      longitude: editedLongitude,
-    });
-    setIsEditing(false);
-    onEdit(false);
-    setIsHovered(false);
+    const nameInput = document.getElementById("input-name");
+    const latitudeInput = document.getElementById("input-latitude");
+    const longitudeInput = document.getElementById("input-longitude");
+
+    // Check the validity of each field
+    const isNameValid = nameInput.checkValidity();
+    const isLatitudeValid = latitudeInput.checkValidity();
+    const isLongitudeValid = longitudeInput.checkValidity();
+    // console.log(`isNameValid = ${isNameValid}, isLatitudeValid = ${isLatitudeValid}, isLongitudeValid = ${isLongitudeValid}`)
+    if (isNameValid && isLatitudeValid && isLongitudeValid) {
+      handleUpdate(id, {
+        name: editedRow.name,
+        coordinates: [editedRow.longitude, editedRow.latitude],
+      });
+      setIsEditing(false);
+      onEdit(false);
+      setIsHovered(false);
+    } else {
+      // console.log(`isNameValid = ${isNameValid}, isLatitudeValid = ${isLatitudeValid}, isLongitudeValid = ${isLongitudeValid}`)
+    }
   };
 
   const handleCancelClick = () => {
+    setEditedRow({
+      name: name,
+      latitude: latitude,
+      longitude: longitude,
+    });
     setIsEditing(false);
     onEdit(false);
     setIsHovered(false);
@@ -52,9 +108,7 @@ function LocationItem({ id, name, latitude, longitude, onUpdate, onEdit,hideIcon
   };
 
   const handleConfirmClick = () => {
-    // Perform your delete action here
-    // Then close the dialog
-    // console.log("Perform your delete action here")
+    handleDelete(id);
     closeDialog();
     setIsHovered(false);
   };
@@ -63,33 +117,39 @@ function LocationItem({ id, name, latitude, longitude, onUpdate, onEdit,hideIcon
     <>
       {isEditing ? (
         <tr
-        key={id}
-        className="group p-4 mb-4"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-          <td className="w-full pl-4 pr-4 py-1.5 whitespace-no-wrap border-b">
+          key={id}
+          className="group p-4 mb-4"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <td className="px4 py-2 whitespace-no-wrap border-b">
             <input
+              id="input-name"
+              name="name"
               type="text"
-              className="w-full px-1 py-2 border-2 rounded focus:outline-none focus:border-blue-500"
-              value={editedName}
-              onChange={(e) => setEditedName(e.target.value)}
+              className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500"
+              value={editedRow.name}
+              onChange={handleChange}
             />
           </td>
-          <td className="w-full pl-4 pr-4  py-1.5 whitespace-no-wrap border-b">
+          <td className="px4 py-2 whitespace-no-wrap border-b">
             <input
+              id="input-latitude"
+              name="latitude"
               type="number"
-              className="w-full px-1 py-2 border-2 rounded focus:outline-none focus:border-blue-500"
-              value={editedLatitude}
-              onChange={(e) => setEditedLatitude(e.target.value)}
+              className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500"
+              value={editedRow.latitude}
+              onChange={handleChange}
             />
           </td>
-          <td className="w-full pl-4 pr-4  py-1.5 whitespace-no-wrap border-b">
+          <td className=" px4 py-2 whitespace-no-wrap border-b">
             <input
+              id="input-longitude"
+              name="longitude"
               type="number"
-              className="w-full px-1 py-2 border-2 rounded focus:outline-none focus:border-blue-500"
-              value={editedLongitude}
-              onChange={(e) => setEditedLongitude(e.target.value)}
+              className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500"
+              value={editedRow.longitude}
+              onChange={handleChange}
             />
           </td>
           <td>
@@ -114,7 +174,7 @@ function LocationItem({ id, name, latitude, longitude, onUpdate, onEdit,hideIcon
               />
             </div>
           </td>
-          </tr>
+        </tr>
       ) : (
         <tr
           key={id}
@@ -122,19 +182,25 @@ function LocationItem({ id, name, latitude, longitude, onUpdate, onEdit,hideIcon
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <td className="w-full px-6 py-4 whitespace-no-wrap border-b">
-            {editedName}
+          <td className=" px4 py-2 whitespace-no-wrap border-b">
+            <div className="w-full px-2 py-2 border-2 border-white rounded">
+              {editedRow.name}
+            </div>
           </td>
-          <td className="w-full px-6 py-4 whitespace-no-wrap border-b">
-            {editedLatitude}
+          <td className=" px4 py-2 whitespace-no-wrap border-b">
+            <div className="w-full px-2 py-2 border-2 border-white rounded">
+              {editedRow.latitude}
+            </div>
           </td>
-          <td className="w-full px-6 py-4 whitespace-no-wrap border-b">
-            {editedLongitude}
+          <td className=" px4 py-2 whitespace-no-wrap border-b">
+            <div className="w-full px-2 py-2 border-2 border-white rounded">
+              {editedRow.longitude}
+            </div>
           </td>
           <td>
             <div
               className={`group flex h-7 w-7 items-center justify-center rounded-lg bg-white ${
-                !hideIcons ? ' cursor-pointer hover:bg-gray-50' : ''
+                !hideIcons ? " cursor-pointer hover:bg-gray-50" : ""
               }`}
               onClick={!hideIcons ? handleEditClick : null}
             >
@@ -149,7 +215,7 @@ function LocationItem({ id, name, latitude, longitude, onUpdate, onEdit,hideIcon
           <td>
             <div
               className={`group flex h-7 w-7 items-center justify-center rounded-lg bg-white ${
-                !hideIcons ? ' cursor-pointer hover:bg-gray-50' : ''
+                !hideIcons ? " cursor-pointer hover:bg-gray-50" : ""
               }`}
               onClick={!hideIcons ? handleTrashIconClick : null}
             >
@@ -162,7 +228,7 @@ function LocationItem({ id, name, latitude, longitude, onUpdate, onEdit,hideIcon
             </div>
 
             <DeleteConfirmation
-              name={editedName}
+              name={editedRow.name}
               isDeleteConfirmationOpen={isDeleteConfirmationOpen}
               closeDialog={closeDialog}
               handleConfirmClick={handleConfirmClick}
