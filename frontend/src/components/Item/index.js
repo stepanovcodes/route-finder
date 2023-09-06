@@ -117,13 +117,13 @@ function Item({
           onMouseLeave={() => setIsHovered(false)}
         >
           {headers.map((header) => (
-            <td className="px4 py-2 whitespace-no-wrap border-b">
+            <td key={header} className="px4 py-2 whitespace-no-wrap border-b">
               <input
                 name={header}
                 type={
                   header === "name"
                     ? "text"
-                    : "number"
+                    : (header === "earliest_start" || header === "latest_end"  ? "datetime-local" : "number")
                 }
                 className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500"
                 value={editedRow[header]}

@@ -66,7 +66,7 @@ function NewRowItem({ handleCreate, headers}) {
                 type={
                   header === "name"
                     ? "text"
-                    : "number"
+                    : (header === "earliest_start" || header === "latest_end"  ? "datetime-local" : "number")
                 }
                 className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500"
                 value={newRow[header]}
