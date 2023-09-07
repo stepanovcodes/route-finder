@@ -14,7 +14,7 @@ const { Vehicle } = require("../models");
 async function index(req, res, next) {
   try {
     // get all Vehicles
-    res.status(200).json(await Vehicle.find({}));
+    res.status(200).json(await Vehicle.find({}).populate("start_location","name").populate("end_location","name").populate("capacities","name").populate("capabilities","name").populate("breaks","name"));
   } catch (error) {
     //send error
     res.status(400).json({ error: error.message });

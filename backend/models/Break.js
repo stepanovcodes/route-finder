@@ -11,6 +11,7 @@ const BreakSchema = new Schema(
     name: {
       type: String,
       required: true,
+      unique: true,
     },
     earliest_start: {
       type: Date,
