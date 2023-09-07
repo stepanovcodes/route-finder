@@ -32,6 +32,10 @@ function Item({
         header === "start_location" ||
         header === "end_location" ||
         header === "location" ||
+        header === "locations" ||
+        header === "vehicles" ||
+        header === "services" ||
+        header === "shipments" ||
         header === "from" ||
         header === "to" ||
         header === "requirements"

@@ -1,7 +1,7 @@
 import { useState /*useContext*/ } from "react";
 import { Button } from "@fluentui/react-components";
 // import {DataContext} from "../../data/DataContext"
-// import Select from "react-select";
+import Select from "react-select";
 import "./NewRowItem.css";
 
 function getCurrentDateTime() {
@@ -18,7 +18,9 @@ function getCurrentDateTime() {
 }
 
 function NewRowItem({ handleCreate, headers, dropdownLists }) {
-  // console.log(dropdownLists)
+  // const dropLocation = dropdownLists.locations.map(({_id, name}) =>{return {value: _id, label: name}})
+  console.log(dropdownLists)
+
   const initialAddRow = Object.fromEntries(
     headers.map((header) => {
       let defaultSelection = [];
@@ -65,6 +67,12 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
         case "type_dropoff":
           defaultSelection = [header, "strict"];
           break;
+        case "version":
+          defaultSelection = [header, 1];
+          break;
+        case "objectives":
+          defaultSelection = [header, "min-schedule-completion-time"];
+          break;
         case "earliest_start":
           defaultSelection = [header, getCurrentDateTime()];
           break;
@@ -107,8 +115,20 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
         case "latest_dropoff":
           defaultSelection = [header, "2100-01-01T00:00"];
           break;
+        // case "locations":
+        //   defaultSelection = [header, [{ value: null, label: null }]];
+        //   break;
+        // case "vehicles":
+        //   defaultSelection = [header, [{ value: null, label: null }]];
+        //   break;
+        // case "services":
+        //   defaultSelection = [header, [{ value: null, label: null }]];
+        //   break;
+        // case "shipments":
+        //   defaultSelection = [header, { value: '64f2cbba0c38e4f3a9d8ecc7', label:'oreder-123' }];
+        //   break;
         default:
-          defaultSelection = [header, null];
+          defaultSelection = [header, ""];
       }
       return defaultSelection;
     })
@@ -116,9 +136,16 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
   const [newRow, setNewRow] = useState(initialAddRow);
   // const locations = useContext(DataContext);
 
+  function handleMultiSelectChange(e, metadata) {
+    setNewRow({ ...newRow, [metadata.name]: e });
+    console.log(e);
+    console.log(newRow);
+  }
   function handleChange(e) {
     setNewRow({ ...newRow, [e.target.name]: e.target.value });
-    // console.log( newRow);
+    console.log(e);
+    console.log(newRow);
+
     // Custom validation logic
     // if (e.target.name === "latitude") {
     //   if (isNaN(e.target.value) || parseFloat(e.target.value) < -90 || parseFloat(e.target.value) > 90) {
@@ -274,6 +301,40 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
                   <option value="soft_end">soft_end</option>
                 </select>
               </>
+            ) : header === "objectives" ? (
+              <>
+                <select
+                  name={header}
+                  className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
+                  value={newRow[header]}
+                  onChange={handleChange}
+                >
+                  <option value="min-schedule-completion-time">
+                    Min Longest Schedule
+                  </option>
+                  <option value="min-total-travel-duration">
+                    Min Travel Time
+                  </option>
+                </select>
+              </>
+            ) : header === "vehicles" ||
+              header === "services" ||
+              header === "shipments" ? (
+              <div className="w-full border-2 rounded focus:outline-none focus:border-blue-500 control-height">
+                <Select
+                  // defaultValue={dropdownLists[header].map(({_id, name}) =>{return {value: _id, label: name}})[0]}
+                  isMulti
+                  name={header}
+                  value={newRow[header]}
+                  options={dropdownLists[header].map(({ _id, name }) => {
+                    return { value: _id, label: name };
+                  })}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  setValue
+                  onChange={handleMultiSelectChange}
+                />
+              </div>
             ) : (
               <input
                 name={header}
@@ -304,6 +365,7 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
                     : ""
                 }`}
                 value={newRow[header]}
+                disabled={header === "version" ? true : false}
                 placeholder={header.charAt(0).toUpperCase() + header.slice(1)}
                 onChange={handleChange}
               />
