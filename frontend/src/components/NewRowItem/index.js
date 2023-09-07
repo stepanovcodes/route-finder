@@ -32,22 +32,40 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
         case "end_location":
           defaultSelection = [header, dropdownLists.locations[0]._id];
           break;
+        case "location":
+          defaultSelection = [header, dropdownLists.locations[0]._id];
+          break;
         case "capacities":
           defaultSelection = [header, dropdownLists.capacities[0]._id];
           break;
         case "capabilities":
           defaultSelection = [header, dropdownLists.capabilities[0]._id];
           break;
+        case "requirements":
+            defaultSelection = [header, dropdownLists.capabilities[0]._id];
+            break;
         case "breaks":
           defaultSelection = [header, dropdownLists.breaks[0]._id];
           break;
         case "loading_policy":
           defaultSelection = [header, "any"];
           break;
+        case "type":
+          defaultSelection = [header, "strict"];
+          break;
         case "earliest_start":
           defaultSelection = [header, getCurrentDateTime()];
           break;
+        case "earliest":
+          defaultSelection = [header, getCurrentDateTime()];
+          break;
+        case "duration":
+          defaultSelection = [header, 300];
+          break;
         case "latest_end":
+          defaultSelection = [header, "2100-01-01T00:00"];
+          break;
+        case "latest":
           defaultSelection = [header, "2100-01-01T00:00"];
           break;
         default:
@@ -124,7 +142,9 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
                   <option value="walking">walking</option>
                 </select>
               </>
-            ) : header === "start_location" || header === "end_location" ? (
+            ) : header === "start_location" ||
+              header === "end_location" ||
+              header === "location" ? (
               <>
                 <select
                   name={header}
@@ -154,7 +174,7 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
                   ))}
                 </select>
               </>
-            ) : header === "capabilities" ? (
+            ) : header === "capabilities" || header === "requirements" ? (
               <>
                 <select
                   name={header}
@@ -197,18 +217,38 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
                   <option value="lifo">lifo</option>
                 </select>
               </>
+            ) : header === "type" ? (
+              <>
+                <select
+                  name={header}
+                  className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
+                  value={newRow[header]}
+                  onChange={handleChange}
+                >
+                  <option value="strict">strict</option>
+                  <option value="soft">soft</option>
+                  <option value="soft_start">soft_start</option>
+                  <option value="soft_end">soft_end</option>
+                </select>
+              </>
             ) : (
               <input
                 name={header}
                 type={
                   header === "name"
                     ? "text"
-                    : header === "earliest_start" || header === "latest_end"
+                    : header === "earliest_start" ||
+                      header === "latest_end" ||
+                      header === "earliest" ||
+                      header === "latest"
                     ? "datetime-local"
                     : "number"
                 }
                 className={`w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 ${
-                  header === "earliest_start" || header === "latest_end"
+                  header === "earliest_start" ||
+                  header === "latest_end" ||
+                  header === "earliest" ||
+                  header === "latest"
                     ? "text-xs control-height"
                     : ""
                 }`}

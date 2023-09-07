@@ -140,7 +140,7 @@ export default function Navigation() {
               leave="transition ease-in duration-150"
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
-              onExited={closePopover}
+              // onExited={closePopover}
             >
               <Popover.Panel
                 ref={popoverRef}

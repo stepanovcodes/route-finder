@@ -3,6 +3,7 @@ import Locations from "../../pages/Locations/";
 import Settings from "../../pages/Settings";
 import NotFound404 from '../../pages/NotFound404'
 import Vehicles from "../../pages/Vehicles";
+import Services from "../../pages/Services";
 
 const Main = () => {
   return (
@@ -11,6 +12,7 @@ const Main = () => {
         <Route path="/locations" element={<Locations />} />
         <Route path="/vehicles" element={<Vehicles />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/services" element={<Services />} />
         <Route path="/*" element={<NotFound404/>}/>
       </Routes>
     </main>
