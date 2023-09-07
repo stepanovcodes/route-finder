@@ -35,6 +35,12 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
         case "location":
           defaultSelection = [header, dropdownLists.locations[0]._id];
           break;
+        case "from":
+          defaultSelection = [header, dropdownLists.locations[0]._id];
+          break;
+        case "to":
+          defaultSelection = [header, dropdownLists.locations[0]._id];
+          break;
         case "capacities":
           defaultSelection = [header, dropdownLists.capacities[0]._id];
           break;
@@ -42,8 +48,8 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
           defaultSelection = [header, dropdownLists.capabilities[0]._id];
           break;
         case "requirements":
-            defaultSelection = [header, dropdownLists.capabilities[0]._id];
-            break;
+          defaultSelection = [header, dropdownLists.capabilities[0]._id];
+          break;
         case "breaks":
           defaultSelection = [header, dropdownLists.breaks[0]._id];
           break;
@@ -53,14 +59,41 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
         case "type":
           defaultSelection = [header, "strict"];
           break;
+        case "type_pickup":
+          defaultSelection = [header, "strict"];
+          break;
+        case "type_dropoff":
+          defaultSelection = [header, "strict"];
+          break;
         case "earliest_start":
           defaultSelection = [header, getCurrentDateTime()];
           break;
         case "earliest":
           defaultSelection = [header, getCurrentDateTime()];
           break;
+        case "earliest_pickup":
+          defaultSelection = [header, getCurrentDateTime()];
+          break;
+        case "earliest_dropoff":
+          defaultSelection = [header, getCurrentDateTime()];
+          break;
         case "duration":
           defaultSelection = [header, 300];
+          break;
+        case "dropoff_duration":
+          defaultSelection = [header, 300];
+          break;
+        case "pickup_duration":
+          defaultSelection = [header, 300];
+          break;
+        case "weight":
+          defaultSelection = [header, 0];
+          break;
+        case "volume":
+          defaultSelection = [header, 0];
+          break;
+        case "boxes":
+          defaultSelection = [header, 0];
           break;
         case "latest_end":
           defaultSelection = [header, "2100-01-01T00:00"];
@@ -68,8 +101,14 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
         case "latest":
           defaultSelection = [header, "2100-01-01T00:00"];
           break;
+        case "latest_pickup":
+          defaultSelection = [header, "2100-01-01T00:00"];
+          break;
+        case "latest_dropoff":
+          defaultSelection = [header, "2100-01-01T00:00"];
+          break;
         default:
-          defaultSelection = [header, ""];
+          defaultSelection = [header, null];
       }
       return defaultSelection;
     })
@@ -144,6 +183,8 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
               </>
             ) : header === "start_location" ||
               header === "end_location" ||
+              header === "from" ||
+              header === "to" ||
               header === "location" ? (
               <>
                 <select
@@ -217,7 +258,9 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
                   <option value="lifo">lifo</option>
                 </select>
               </>
-            ) : header === "type" ? (
+            ) : header === "type" ||
+              header === "type_pickup" ||
+              header === "type_dropoff" ? (
               <>
                 <select
                   name={header}
@@ -240,7 +283,11 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
                     : header === "earliest_start" ||
                       header === "latest_end" ||
                       header === "earliest" ||
-                      header === "latest"
+                      header === "latest" ||
+                      header === "earliest_pickup" ||
+                      header === "latest_pickup" ||
+                      header === "earliest_dropoff" ||
+                      header === "latest_dropoff"
                     ? "datetime-local"
                     : "number"
                 }
@@ -248,7 +295,11 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
                   header === "earliest_start" ||
                   header === "latest_end" ||
                   header === "earliest" ||
-                  header === "latest"
+                  header === "latest" ||
+                  header === "earliest_pickup" ||
+                  header === "latest_pickup" ||
+                  header === "earliest_dropoff" ||
+                  header === "latest_dropoff"
                     ? "text-xs control-height"
                     : ""
                 }`}

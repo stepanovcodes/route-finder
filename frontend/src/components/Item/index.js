@@ -32,6 +32,8 @@ function Item({
         header === "start_location" ||
         header === "end_location" ||
         header === "location" ||
+        header === "from" ||
+        header === "to" ||
         header === "requirements"
       ) {
         return [header, inputItem[header]._id];
@@ -150,139 +152,151 @@ function Item({
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {headers.map((header) => (
-            <td key={header} className=" px4 py-2 whitespace-no-wrap">
-              {header === "routing_profile" ? (
-                <>
-                  <select
-                    name={header}
-                    className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
-                    value={editedRow[header]}
-                    onChange={handleChange}
-                  >
-                    <option value="driving">driving</option>
-                    <option value="driving-traffic">driving-traffic</option>
-                    <option value="cycling">cycling</option>
-                    <option value="walking">walking</option>
-                  </select>
-                </>
-              ) : header === "start_location" ||
-                header === "end_location" ||
-                header === "location" ? (
-                <>
-                  <select
-                    name={header}
-                    className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
-                    value={editedRow[header]}
-                    onChange={handleChange}
-                  >
-                    {dropdownLists.locations.map((opt) => (
-                      <option key={opt._id} value={opt._id}>
-                        {opt.name}
-                      </option>
-                    ))}
-                  </select>
-                </>
-              ) : header === "capacities" ? (
-                <>
-                  <select
-                    name={header}
-                    className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
-                    value={editedRow[header]}
-                    onChange={handleChange}
-                  >
-                    {dropdownLists.capacities.map((opt) => (
-                      <option key={opt._id} value={opt._id}>
-                        {opt.name}
-                      </option>
-                    ))}
-                  </select>
-                </>
-              ) : header === "capabilities" || header === "requirements" ? (
-                <>
-                  <select
-                    name={header}
-                    className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
-                    value={editedRow[header]}
-                    onChange={handleChange}
-                  >
-                    {dropdownLists.capabilities.map((opt) => (
-                      <option key={opt._id} value={opt._id}>
-                        {opt.name}
-                      </option>
-                    ))}
-                  </select>
-                </>
-              ) : header === "breaks" ? (
-                <>
-                  <select
-                    name={header}
-                    className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
-                    value={editedRow[header]}
-                    onChange={handleChange}
-                  >
-                    {dropdownLists.breaks.map((opt) => (
-                      <option key={opt._id} value={opt._id}>
-                        {opt.name}
-                      </option>
-                    ))}
-                  </select>
-                </>
-              ) : header === "loading_policy" ? (
-                <>
-                  <select
-                    name={header}
-                    className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
-                    value={editedRow[header]}
-                    onChange={handleChange}
-                  >
-                    <option value="any">any</option>
-                    <option value="fifo">fifo</option>
-                    <option value="lifo">lifo</option>
-                  </select>
-                </>
-              ) : header === "type" ? (
-                <>
-                  <select
-                    name={header}
-                    className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
-                    value={editedRow[header]}
-                    onChange={handleChange}
-                  >
-                    <option value="strict">strict</option>
-                    <option value="soft">soft</option>
-                    <option value="soft_start">soft_start</option>
-                    <option value="soft_end">soft_end</option>
-                  </select>
-                </>
-              ) : (
-                <input
+        {headers.map((header) => (
+          <td key={header} className=" px4 py-2 whitespace-no-wrap">
+            {header === "routing_profile" ? (
+              <>
+                <select
                   name={header}
-                  type={
-                    header === "name"
-                      ? "text"
-                      : header === "earliest_start" ||
-                        header === "latest_end" ||
-                        header === "earliest" ||
-                        header === "latest"
-                      ? "datetime-local"
-                      : "number"
-                  }
-                  className={`w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 ${
-                    header === "earliest_start" ||
-                    header === "latest_end" ||
-                    header === "earliest" ||
-                    header === "latest"
-                      ? "text-xs control-height"
-                      : ""
-                  }`}
+                  className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
                   value={editedRow[header]}
-                  placeholder={header.charAt(0).toUpperCase() + header.slice(1)}
                   onChange={handleChange}
-                />
-              )}
-            </td>
-          ))}
+                >
+                  <option value="driving">driving</option>
+                  <option value="driving-traffic">driving-traffic</option>
+                  <option value="cycling">cycling</option>
+                  <option value="walking">walking</option>
+                </select>
+              </>
+            ) : header === "start_location" ||
+              header === "end_location" ||
+              header === "from" ||
+              header === "to" ||
+              header === "location" ? (
+              <>
+                <select
+                  name={header}
+                  className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
+                  value={editedRow[header]}
+                  onChange={handleChange}
+                >
+                  {dropdownLists.locations.map((opt) => (
+                    <option key={opt._id} value={opt._id}>
+                      {opt.name}
+                    </option>
+                  ))}
+                </select>
+              </>
+            ) : header === "capacities" ? (
+              <>
+                <select
+                  name={header}
+                  className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
+                  value={editedRow[header]}
+                  onChange={handleChange}
+                >
+                  {dropdownLists.capacities.map((opt) => (
+                    <option key={opt._id} value={opt._id}>
+                      {opt.name}
+                    </option>
+                  ))}
+                </select>
+              </>
+            ) : header === "capabilities" || header === "requirements" ? (
+              <>
+                <select
+                  name={header}
+                  className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
+                  value={editedRow[header]}
+                  onChange={handleChange}
+                >
+                  {dropdownLists.capabilities.map((opt) => (
+                    <option key={opt._id} value={opt._id}>
+                      {opt.name}
+                    </option>
+                  ))}
+                </select>
+              </>
+            ) : header === "breaks" ? (
+              <>
+                <select
+                  name={header}
+                  className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
+                  value={editedRow[header]}
+                  onChange={handleChange}
+                >
+                  {dropdownLists.breaks.map((opt) => (
+                    <option key={opt._id} value={opt._id}>
+                      {opt.name}
+                    </option>
+                  ))}
+                </select>
+              </>
+            ) : header === "loading_policy" ? (
+              <>
+                <select
+                  name={header}
+                  className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
+                  value={editedRow[header]}
+                  onChange={handleChange}
+                >
+                  <option value="any">any</option>
+                  <option value="fifo">fifo</option>
+                  <option value="lifo">lifo</option>
+                </select>
+              </>
+            ) : header === "type" ||
+              header === "type_pickup" ||
+              header === "type_dropoff" ? (
+              <>
+                <select
+                  name={header}
+                  className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
+                  value={editedRow[header]}
+                  onChange={handleChange}
+                >
+                  <option value="strict">strict</option>
+                  <option value="soft">soft</option>
+                  <option value="soft_start">soft_start</option>
+                  <option value="soft_end">soft_end</option>
+                </select>
+              </>
+            ) : (
+              <input
+                name={header}
+                type={
+                  header === "name"
+                    ? "text"
+                    : header === "earliest_start" ||
+                      header === "latest_end" ||
+                      header === "earliest" ||
+                      header === "latest" ||
+                      header === "earliest_pickup" ||
+                      header === "latest_pickup" ||
+                      header === "earliest_dropoff" ||
+                      header === "latest_dropoff"
+                    ? "datetime-local"
+                    : "number"
+                }
+                className={`w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 ${
+                  header === "earliest_start" ||
+                  header === "latest_end" ||
+                  header === "earliest" ||
+                  header === "latest" ||
+                  header === "earliest_pickup" ||
+                  header === "latest_pickup" ||
+                  header === "earliest_dropoff" ||
+                  header === "latest_dropoff"
+                    ? "text-xs control-height"
+                    : ""
+                }`}
+                value={editedRow[header]}
+                placeholder={header.charAt(0).toUpperCase() + header.slice(1)}
+                onChange={handleChange}
+              />
+            )}
+          </td>
+        ))}
           <td>
             <div
               className="group flex h-7 w-7 items-center justify-center rounded-lg bg-white cursor-pointer hover:bg-gray-50"
@@ -324,7 +338,9 @@ function Item({
                     ).name
                   : header === "start_location" ||
                     header === "end_location" ||
-                    header === "location"
+                    header === "location" ||
+                    header === "from" ||
+                    header === "to"
                   ? dropdownLists.locations.find(
                       (item) => item._id === editedRow[header]
                     ).name

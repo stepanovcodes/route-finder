@@ -4,6 +4,7 @@ import Settings from "../../pages/Settings";
 import NotFound404 from '../../pages/NotFound404'
 import Vehicles from "../../pages/Vehicles";
 import Services from "../../pages/Services";
+import Shipments from "../../pages/Shipments";
 
 const Main = () => {
   return (
@@ -13,6 +14,7 @@ const Main = () => {
         <Route path="/vehicles" element={<Vehicles />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/shipments" element={<Shipments />} />
         <Route path="/*" element={<NotFound404/>}/>
       </Routes>
     </main>
