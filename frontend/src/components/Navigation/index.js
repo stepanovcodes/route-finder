@@ -91,9 +91,6 @@ export default function Navigation() {
     };
   }, [isPopoverOpen]);
 
-  console.log(`isLoading: ${isLoading}`)
-  console.log(`isAuthenticated: ${isAuthenticated}`)
-
   return (
     <>
       <nav

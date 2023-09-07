@@ -14,23 +14,46 @@ function Item({
   hideIcons,
   handleDelete,
   handleUpdate,
+  dropdownLists
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const initialEditedRow = Object.fromEntries(
     headers.map((header) => {
+      // console.log(header, inputItem[header])
       if (header === "longitude") {
         return [header, inputItem.coordinates[0]];
       } else if (header === "latitude") {
         return [header, inputItem.coordinates[1]];
+      } else if (header === "breaks" || header === "capabilities"|| header === "capacities" || header === "start_location" || header === "end_location") {  
+        return [header, inputItem[header]._id];
       } else {
         return [header, inputItem[header]];
       }
     })
   );
+
+  // const initialDisplayedRow = Object.fromEntries(
+  //   headers.map((header) => {
+  //     // console.log(header, inputItem[header])
+  //     if (header === "longitude") {
+  //       return [header, inputItem.coordinates[0]];
+  //     } else if (header === "latitude") {
+  //       return [header, inputItem.coordinates[1]];
+  //     } else if (header === "breaks" || header === "capabilities"|| header === "capacities" || header === "start_location" || header === "end_location") {  
+  //       return [header, inputItem[header].name];
+  //     } else {
+  //       return [header, inputItem[header]];
+  //     }
+  //   })
+  // );
+  // console.log("initialEditedRow", initialEditedRow)
   const [editedRow, setEditedRow] = useState(initialEditedRow);
+  // const [displayedRow] = useState(initialDisplayedRow);
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] =
     useState(false);
+
+    // console.log(dropdownLists)
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -39,6 +62,7 @@ function Item({
 
   const handleChange = (e) => {
     setEditedRow({ ...editedRow, [e.target.name]: e.target.value });
+    // console.log( editedRow)
     // if (e.target.name === "latitude") {
     //   if (
     //     isNaN(e.target.value) ||
@@ -69,6 +93,7 @@ function Item({
   };
 
   const handleUpdateClick = () => {
+    // console.log( editedRow)
     // const nameInput = document.getElementById("input-name");
     // const latitudeInput = document.getElementById("input-latitude");
     // const longitudeInput = document.getElementById("input-longitude");
@@ -82,6 +107,7 @@ function Item({
     handleUpdate(inputItem._id, editedRow);
     setIsEditing(false);
     handleEdit(false);
+    // console.log( editedRow)
     // } else {
     // console.log(`isNameValid = ${isNameValid}, isLatitudeValid = ${isLatitudeValid}, isLongitudeValid = ${isLongitudeValid}`)
     // }
@@ -117,20 +143,116 @@ function Item({
           onMouseLeave={() => setIsHovered(false)}
         >
           {headers.map((header) => (
-            <td key={header} className="px4 py-2 whitespace-no-wrap border-b">
+          <td key={header} className=" px4 py-2 whitespace-no-wrap">
+            {header === "routing_profile" ? (
+              <>
+                <select
+                  name={header}
+                  className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
+                  value={editedRow[header]}
+                  onChange={handleChange}
+                >
+                  <option value="driving">driving</option>
+                  <option value="driving-traffic">driving-traffic</option>
+                  <option value="cycling">cycling</option>
+                  <option value="walking">walking</option>
+                </select>
+              </>
+            ) : header === "start_location" || header === "end_location" ? (
+              <>
+                <select
+                  name={header}
+                  className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
+                  value={editedRow[header]}
+                  onChange={handleChange}
+                >
+                  {dropdownLists.locations.map((opt) => (
+                    <option key={opt._id} value={opt._id}>
+                      {opt.name}
+                    </option>
+                  ))}
+                </select>
+              </>
+            ) : header === "capacities" ? (
+              <>
+                <select
+                  name={header}
+                  className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
+                  value={editedRow[header]}
+                  onChange={handleChange}
+                >
+                  {dropdownLists.capacities.map((opt) => (
+                    <option key={opt._id} value={opt._id}>
+                      {opt.name}
+                    </option>
+                  ))}
+                </select>
+              </>
+            ) : header === "capabilities" ? (
+              <>
+                <select
+                  name={header}
+                  className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
+                  value={editedRow[header]}
+                  onChange={handleChange}
+                >
+                  {dropdownLists.capabilities.map((opt) => (
+                    <option key={opt._id} value={opt._id}>
+                      {opt.name}
+                    </option>
+                  ))}
+                </select>
+              </>
+            ) : header === "breaks" ? (
+              <>
+                <select
+                  name={header}
+                  className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
+                  value={editedRow[header]}
+                  onChange={handleChange}
+                >
+                  {dropdownLists.breaks.map((opt) => (
+                    <option key={opt._id} value={opt._id}>
+                      {opt.name}
+                    </option>
+                  ))}
+                </select>
+              </>
+            ) : header === "loading_policy" ? (
+              <>
+                <select
+                  name={header}
+                  className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 control-height"
+                  value={editedRow[header]}
+                  onChange={handleChange}
+                >
+                  <option value="any">any</option>
+                  <option value="fifo">fifo</option>
+                  <option value="lifo">lifo</option>
+                </select>
+              </>
+            ) : (
               <input
                 name={header}
                 type={
                   header === "name"
                     ? "text"
-                    : (header === "earliest_start" || header === "latest_end"  ? "datetime-local" : "number")
+                    : header === "earliest_start" || header === "latest_end"
+                    ? "datetime-local"
+                    : "number"
                 }
-                className="w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500"
+                className={`w-full px-2 py-2 border-2 rounded focus:outline-none focus:border-blue-500 ${
+                  header === "earliest_start" || header === "latest_end"
+                    ? "text-xs control-height"
+                    : ""
+                }`}
                 value={editedRow[header]}
+                placeholder={header.charAt(0).toUpperCase() + header.slice(1)}
                 onChange={handleChange}
               />
-            </td>
-          ))}
+            )}
+          </td>
+        ))}
           <td>
             <div
               className="group flex h-7 w-7 items-center justify-center rounded-lg bg-white cursor-pointer hover:bg-gray-50"
@@ -164,7 +286,12 @@ function Item({
           {headers.map((header) => (
             <td key={header} className=" px4 py-2 whitespace-no-wrap border-b">
               <div className="w-full px-2 py-2 border-2 border-white rounded">
-                {editedRow[header]}
+                {header === "breaks" || header === "capabilities"|| header === "capacities" ?
+                dropdownLists[header].find(item => item._id === editedRow[header]).name
+                : header === "start_location" || header === "end_location" ?
+                dropdownLists.locations.find(item => item._id === editedRow[header]).name
+                : editedRow[header]
+              }
               </div>
             </td>
           ))}

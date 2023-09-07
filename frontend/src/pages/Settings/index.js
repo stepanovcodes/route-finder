@@ -214,7 +214,7 @@ const Settings = (props) => {
     </div>
   );
 
-  return isCapacitiesLoading && isCapabilitiesLoading && isBreaksLoading ? loading() : loaded();
+  return isCapacitiesLoading || isCapabilitiesLoading || isBreaksLoading ? loading() : loaded();
 };
 
 export default Settings;

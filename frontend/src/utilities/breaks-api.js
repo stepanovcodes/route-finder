@@ -39,9 +39,6 @@ export async function destroy(id) {
   }
 }
 
-
-// src/utilities/person-api.js
-
 export async function update(id, updatedData) {
   const url = `${BASE_URL}/${id}`;
 

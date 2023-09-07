@@ -1,13 +1,8 @@
-* {
-  box-sizing: border-box;
-}
-
 .App {
   background-color: #f8f8f8;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1rem;
-  line-height: 1.5rem;;
-  
+  line-height: 1.5rem;
 
   /* source: https://moderncss.dev/generating-font-size-css-rules-and-creating-a-fluid-type-scale/ */
   min-height: 100vh;
@@ -18,7 +13,9 @@ li,
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5,
+h6 {
   overflow-wrap: break-word;
   hyphens: auto;
   margin:0;
@@ -41,19 +38,30 @@ h4 {
 h5 {
   font-size: 0.667rem;
 }
+main{
+  padding: 4rem 0 6rem 0;
+}
 
-.container {
+section {
+  margin: 2rem 0 4rem 0;
+}
+
+.container{
   display: flex;
   flex-direction: column;
   width: 90%;
   margin: 0 auto;
 }
 
-main{
-  padding: 4rem 0 6rem 0;
-}
-section {
-  margin: 2rem 0 4rem 0;
+.spinner {
+  width: 1.5rem;
+  animation: loading infinite 3s linear;
 }
 
-
+@keyframes loading {
+  from {
+    transform: rotateZ(0deg);
+  }to{
+    transform: rotateZ(360deg);
+  }
+}
