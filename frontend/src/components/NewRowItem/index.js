@@ -18,8 +18,7 @@ function getCurrentDateTime() {
 }
 
 function NewRowItem({ handleCreate, headers, dropdownLists }) {
-  // const dropLocation = dropdownLists.locations.map(({_id, name}) =>{return {value: _id, label: name}})
-  console.log(dropdownLists)
+  // console.log(dropdownLists)
 
   const initialAddRow = Object.fromEntries(
     headers.map((header) => {
@@ -115,36 +114,27 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
         case "latest_dropoff":
           defaultSelection = [header, "2100-01-01T00:00"];
           break;
-        // case "locations":
-        //   defaultSelection = [header, [{ value: null, label: null }]];
-        //   break;
-        // case "vehicles":
-        //   defaultSelection = [header, [{ value: null, label: null }]];
-        //   break;
-        // case "services":
-        //   defaultSelection = [header, [{ value: null, label: null }]];
-        //   break;
-        // case "shipments":
-        //   defaultSelection = [header, { value: '64f2cbba0c38e4f3a9d8ecc7', label:'oreder-123' }];
-        //   break;
         default:
           defaultSelection = [header, ""];
       }
       return defaultSelection;
     })
   );
+  // if (headers.includes("vehicles")) initialAddRow.locations = null;
+// console.log(initialAddRow)
   const [newRow, setNewRow] = useState(initialAddRow);
   // const locations = useContext(DataContext);
 
   function handleMultiSelectChange(e, metadata) {
     setNewRow({ ...newRow, [metadata.name]: e });
-    console.log(e);
-    console.log(newRow);
+
+    // console.log(e);
+    // console.log(newRow);
   }
   function handleChange(e) {
     setNewRow({ ...newRow, [e.target.name]: e.target.value });
-    console.log(e);
-    console.log(newRow);
+    // console.log(e);
+    // console.log(newRow);
 
     // Custom validation logic
     // if (e.target.name === "latitude") {
@@ -180,6 +170,9 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
     // console.log(`isNameValid = ${isNameValid}, isLatitudeValid = ${isLatitudeValid}, isLongitudeValid = ${isLongitudeValid}`)
     // if (isNameValid && isLatitudeValid && isLongitudeValid) {
     //   handleValidation(true)
+    // Initialize an object to store key mappings for location fields
+
+
     handleCreate(newRow);
     setNewRow(initialAddRow);
     // } else {
