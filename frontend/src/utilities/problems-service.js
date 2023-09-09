@@ -30,6 +30,18 @@ export async function getProblems() {
   }
 }
 
+export async function getProblem(id) {
+  try {
+    const data = await problemsAPI.show(id);
+    //  console.log('data:', data)
+    //  console.log('id:', id)
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw new Error(err);
+  }
+}
+
 export async function createProblem(data) {
   try {
     let vehicles = await getVehicles();
@@ -55,6 +67,7 @@ export async function createProblem(data) {
         from,
         to,
       }));
+  
     } else {
       throw Error(shipments, vehicles, services);
     }
@@ -74,7 +87,8 @@ export async function createProblem(data) {
         return { _id: value };
       }),
       locations: locationsBuilder(data, input),
-      version: 1
+      version: 1,
+      submissions: [{id: null, status: null}]
     };
 
     // console.log("modifiedData:", modifiedData);
@@ -138,10 +152,24 @@ export async function updateProblem(id, data) {
       vehicles: data.vehicles.map(({ value }) => {
         return { _id: value };
       }),
-      locations: locationsBuilder(data, input)
+      locations: locationsBuilder(data, input),
+      submissions: [{id: null, status: null}]
     };
     // console.log("modifiedData:", modifiedData);
     const updatedProblem = await problemsAPI.update(id, modifiedData);
+    return updatedProblem;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function pushSubmission(id, data) {
+  try {
+    const modifiedData = {
+      submissions: data
+    };
+    // console.log("modifiedData:", modifiedData);
+    const updatedProblem  = await problemsAPI.update(id, modifiedData);
     return updatedProblem;
   } catch (err) {
     throw err;

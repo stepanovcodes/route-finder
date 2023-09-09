@@ -36,7 +36,12 @@ async function create(req, res, next) {
 async function show(req, res, next) {
   try {
     // send one person
-    res.status(200).json(await Problem.findById(req.params.id));
+    res.status(200).json(await Problem.findById(req.params.id)
+    .select(["version","locations","vehicles","services","shipments","options"])
+    .populate({path:"locations", select: ["name","coordinates"]})
+    .populate({path: "vehicles", select: ["name", "routing_profile", "start_location", "end_location", "capacities", "capabilities", "earliest_start", "latest_end", "breaks", "loading_policy"], populate: [{path: "start_location", select: "name"}, {path: "end_location", select: "name"}, {path: "capacities", select: ["volume", "weight", "boxes"]}, {path: "capabilities", select: "name"}, {path: "breaks", select:["earliest_start", "latest_end", "duration"]}]})
+    .populate({path: "services", select: ["name","location", "duration", "requirements", "service_times"], populate: [{path: "location", select: "name"}, {path: "requirements", select: "name"}]})
+    .populate({path: "shipments", select: ["name", "from","to", "size","requirements", "pickup_duration", "dropoff_duration", "pickup_times", "dropoff_times"], populate: [{path: "from", select: "name"}, {path: "to", select: "name"}, {path: "requirements", select: "name"}]}));
   } catch (error) {
     //send error
     res.status(400).json({ error: error.message });

@@ -2,6 +2,7 @@ const BASE_URL = `${process.env.REACT_APP_BASE_URL}/problems`;
 
 export async function index() {
   const res = await fetch(BASE_URL, { method: "GET" });
+  // console.log('res.ok: ',res.ok)
   if (res.ok) {
     return res.json();
   } else {
@@ -53,3 +54,16 @@ export async function update(id, updatedData) {
     throw new Error("Invalid PUT Request");
   }
 }
+
+export async function show(id) {
+  const url = `${BASE_URL}/${id}`;
+  // console.log(url)
+  const res = await fetch(url, { method: "GET" })
+  // console.log('res.ok: ',res)
+  if (res.ok) {
+    return res.json();
+  } else {
+    throw new Error("Invalid PUT Request");
+  }
+}
+

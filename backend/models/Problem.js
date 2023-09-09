@@ -6,19 +6,12 @@ const Schema = mongoose.Schema;
 ///////////////////////////////
 // MODELS
 ////////////////////////////////
-const problemTimeSchema = new Schema({
-  earliest: {
-    type: Date,
-    required: true,
-  },
-  latest: {
-    type: Date,
-    required: true,
-  },
-  type: {
+const SubmissionSchema = new Schema({
+  id: {
     type: String,
-    enum: ["strict", "soft", "soft_start", "soft_end"],
-    required: true,
+  },
+  status: {
+    type: String,
   },
 });
 
@@ -58,6 +51,7 @@ const ProblemSchema = new Schema(
         enum: ["min-schedule-completion-time", "min-total-travel-duration"],
       },
     },
+    submissions: [SubmissionSchema]
   },
   { timestamps: true }
 );

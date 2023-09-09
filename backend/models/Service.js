@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 ///////////////////////////////
 // MODELS
 ////////////////////////////////
-const serviceTimeSchema = new Schema({
+const ServiceTimeSchema = new Schema({
   earliest: {
     type: Date,
     required: true,
@@ -45,7 +45,7 @@ const ServiceSchema = new Schema(
       type: [Schema.Types.ObjectId],
       ref: "Capability",
     },
-    service_times: [serviceTimeSchema],
+    service_times: [ServiceTimeSchema],
   },
   { timestamps: true }
 );
