@@ -110,6 +110,7 @@ const Solutions = () => {
             offset: 25,
           }).setHTML(`
           <h1 style="font-weight: bold">${stop.location}</h1>
+          <h1 style="font-weight: bold">${route.vehicle}, stop#${stopNumber}</h1>
           <p>Coordinates: ${stop.location_metadata.supplied_coordinate[0]}, ${stop.location_metadata.supplied_coordinate[1]}</p>
           <p>ETA: ${isoToDatetimeLocal(stop.eta)}</p>
           <p>Type: ${stop.type}</p>
