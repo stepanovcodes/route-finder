@@ -26,23 +26,34 @@ const ContrastColors = [
   "#DDDDDD", // Light Gray
 ];
 
+// Function to convert ISO 8601 to datetime-local format
+function isoToDatetimeLocal(isoString) {
+  const date = new Date(isoString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Month is zero-based
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  return `${year}-${month}-${day} ${hours}:${minutes}`;
+}
+
 const Marker = ({
-  onClick,
+  /*onClick,*/
   children,
   stop,
   type,
   stopNumber,
   backgroundColorByRoute,
 }) => {
-  const _onClick = () => {
-    onClick(stop.location);
-  };
+  // const _onClick = () => {
+  //   onClick(stop.location);
+  // };
 
   return (
     // <button onClick={_onClick} className="marker">
     //   {children}
     // </button>
-    <div className="marker" onClick={_onClick}>
+    <div className="marker" /*onClick={_onClick}*/>
       {children}
       {type === "start" || type === "end" ? (
         <FlagIcon />
@@ -92,14 +103,31 @@ const Solutions = () => {
           stop.type === "end"
         ) {
           stopNumber++;
+          // Create a popup, but don't add it to the map yet.
+          const popup = new mapboxgl.Popup({
+            // closeButton: false,
+            // closeOnClick: false,
+            offset: 25,
+          }).setHTML(`
+          <h1 style="font-weight: bold">${stop.location}</h1>
+          <p>Coordinates: ${stop.location_metadata.supplied_coordinate[0]}, ${stop.location_metadata.supplied_coordinate[1]}</p>
+          <p>ETA: ${isoToDatetimeLocal(stop.eta)}</p>
+          <p>Type: ${stop.type}</p>
+          ${stop.services ? `<p>Services: ${stop.services.join(', ')}</p>` : ''}
+          ${stop.duration ? `<p>Duration: ${stop.duration/60} min</p>` : ''}
+          ${stop.wait ? `<p>Duration: ${stop.wait/60} min</p>` : ''}
+          ${stop.odometer ? `<p>Odometer: ${stop.odometer/1000} km</p>` : ''}
+        `);
+
           // Create a React ref
           const ref = React.createRef();
+
           // Create a new DOM node and save it to the React ref
           ref.current = document.createElement("div");
           // Render a Marker Component on our new DOM node
           createRoot(ref.current).render(
             <Marker
-              onClick={markerClicked}
+              /*onClick={markerClicked}*/
               stop={stop}
               type={stop.type}
               stopNumber={stopNumber}
@@ -110,7 +138,7 @@ const Solutions = () => {
           // Create a Mapbox Marker at our new DOM node
           new mapboxgl.Marker(ref.current)
             .setLngLat(stop.location_metadata.supplied_coordinate)
-            // .setPopup(feature.properties.title)
+            .setPopup(popup)
             .addTo(map);
         }
       });
@@ -123,9 +151,9 @@ const Solutions = () => {
     return () => map.remove();
   }, []);
 
-  const markerClicked = (title) => {
-    window.alert(title);
-  };
+  // const markerClicked = (title) => {
+  //   window.alert(title);
+  // };
 
   return <div className="map-container" ref={mapContainerRef} />;
 };
