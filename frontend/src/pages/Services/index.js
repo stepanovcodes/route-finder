@@ -28,29 +28,29 @@ const Services = (props) => {
   async function handleGet() {
     try {
       const servicesData = await getServices();
-      if (servicesData.length) {
+      // if (servicesData.length) {
         setServices(servicesData);
         setIsServicesLoading(false);
-      } else {
-        setIsServicesLoading(false);
-        throw Error(servicesData);
-      }
+      // } else {
+      //   setIsServicesLoading(false);
+      //   throw Error(servicesData);
+      // }
       const locationsData = await getLocations()
-      if (locationsData.length) {
+      // if (locationsData.length) {
         setLocations(locationsData.map(({ _id, name }) => ({ _id, name })));
         setIsLocationsLoading(false);
-      } else {
-        setIsLocationsLoading(false);
-        throw Error(locationsData);
-      }
+      // } else {
+      //   setIsLocationsLoading(false);
+      //   throw Error(locationsData);
+      // }
       const capabilitiesData = await getCapabilities()
-      if (capabilitiesData.length) {
+      // if (capabilitiesData.length) {
         setCapabilities(capabilitiesData.map(({ _id, name }) => ({ _id, name })));
         setIsCapabilitiesLoading(false);
-      } else {
-        setIsCapabilitiesLoading(false);
-        throw Error(capabilitiesData);
-      }
+      // } else {
+      //   setIsCapabilitiesLoading(false);
+      //   throw Error(capabilitiesData);
+      // }
     } catch (err) {
       console.log({ err: err.message });
     }

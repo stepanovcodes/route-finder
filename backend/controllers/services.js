@@ -14,7 +14,7 @@ const { Service } = require("../models");
 async function index(req, res, next) {
   try {
     // get all Services
-    res.status(200).json(await Service.find({}).populate("location","name").populate("requirements","name"));
+    res.status(200).json(await Service.find({}).sort("name").populate("location","name").populate("requirements","name"));
   } catch (error) {
     //send error
     res.status(400).json({ error: error.message });

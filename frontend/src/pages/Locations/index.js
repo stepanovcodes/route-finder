@@ -17,13 +17,13 @@ const Locations = (props) => {
   async function handleGet() {
     try {
       const locationsData = await getLocations();
-      if (locationsData.length) {
+      // if (locationsData.length) {
         setLocations(locationsData);
         setIsLoading(false);
-      } else {
-        setIsLoading(false);
-        throw Error(locationsData);
-      }
+      // } else {
+      //   setIsLoading(false);
+      //   throw Error(locationsData);
+      // }
     } catch (err) {
       console.log({ err: err.message });
     }

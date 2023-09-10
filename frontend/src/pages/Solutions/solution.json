@@ -1,0 +1,328 @@
+{
+    "dropped": {
+        "services": [],
+        "shipments": []
+    },
+    "routes": [
+        {
+            "vehicle": "Lisa Kelly",
+            "stops": [
+                {
+                    "type": "break",
+                    "start": "1969-04-02T14:24:42Z",
+                    "end": "1969-04-02T14:54:42Z",
+                    "duration": 1800
+                },
+                {
+                    "location": "Ziing Final Mile",
+                    "location_metadata": {
+                        "supplied_coordinate": [
+                            -114.031519,
+                            51.134781
+                        ],
+                        "snapped_coordinate": [
+                            -114.032272,
+                            51.134781
+                        ]
+                    },
+                    "eta": "2023-09-10T15:00:00Z",
+                    "type": "start",
+                    "odometer": 0,
+                    "wait": 0
+                },
+                {
+                    "location": "Calgary Zoo Animal Health Centre",
+                    "location_metadata": {
+                        "supplied_coordinate": [
+                            -114.022746,
+                            51.051681
+                        ],
+                        "snapped_coordinate": [
+                            -114.022868,
+                            51.051281
+                        ]
+                    },
+                    "eta": "2023-09-10T15:13:27Z",
+                    "type": "service",
+                    "duration": 1800,
+                    "services": [
+                        "Service-02"
+                    ],
+                    "odometer": 13901,
+                    "wait": 0
+                },
+                {
+                    "location": "Walmart Marlborough Mall",
+                    "location_metadata": {
+                        "supplied_coordinate": [
+                            -113.978466,
+                            51.053485
+                        ],
+                        "snapped_coordinate": [
+                            -113.977613,
+                            51.053484
+                        ]
+                    },
+                    "eta": "2023-09-10T15:53:59Z",
+                    "type": "service",
+                    "duration": 1800,
+                    "services": [
+                        "Service-09"
+                    ],
+                    "odometer": 21268,
+                    "wait": 0
+                },
+                {
+                    "location": "Walmart Deerfoot Meadows",
+                    "location_metadata": {
+                        "supplied_coordinate": [
+                            -114.045899,
+                            50.984229
+                        ],
+                        "snapped_coordinate": [
+                            -114.045233,
+                            50.98428
+                        ]
+                    },
+                    "eta": "2023-09-10T16:38:08Z",
+                    "type": "service",
+                    "duration": 3600,
+                    "services": [
+                        "Service-07"
+                    ],
+                    "odometer": 35817,
+                    "wait": 0
+                },
+                {
+                    "location": "Costco Heritage Gate",
+                    "location_metadata": {
+                        "supplied_coordinate": [
+                            -114.045457,
+                            50.98963
+                        ],
+                        "snapped_coordinate": [
+                            -114.045454,
+                            50.98963
+                        ]
+                    },
+                    "eta": "2023-09-10T17:41:41Z",
+                    "type": "service",
+                    "duration": 1800,
+                    "services": [
+                        "Service-04"
+                    ],
+                    "odometer": 36605,
+                    "wait": 0
+                },
+                {
+                    "location": "Ziing Final Mile",
+                    "location_metadata": {
+                        "supplied_coordinate": [
+                            -114.031519,
+                            51.134781
+                        ],
+                        "snapped_coordinate": [
+                            -114.032272,
+                            51.134781
+                        ]
+                    },
+                    "eta": "2023-09-10T18:31:14Z",
+                    "type": "end",
+                    "odometer": 60832
+                }
+            ]
+        },
+        {
+            "vehicle": "Alex Stepanov",
+            "stops": [
+                {
+                    "type": "break",
+                    "start": "1969-04-02T14:24:42Z",
+                    "end": "1969-04-02T14:54:42Z",
+                    "duration": 1800
+                },
+                {
+                    "location": "Ziing Final Mile",
+                    "location_metadata": {
+                        "supplied_coordinate": [
+                            -114.031519,
+                            51.134781
+                        ],
+                        "snapped_coordinate": [
+                            -114.032272,
+                            51.134781
+                        ]
+                    },
+                    "eta": "2023-09-10T15:00:00Z",
+                    "type": "start",
+                    "odometer": 0,
+                    "wait": 0
+                },
+                {
+                    "location": "Safeway Thorncliffe",
+                    "location_metadata": {
+                        "supplied_coordinate": [
+                            -114.072679,
+                            51.101554
+                        ],
+                        "snapped_coordinate": [
+                            -114.073261,
+                            51.101561
+                        ]
+                    },
+                    "eta": "2023-09-10T15:11:59Z",
+                    "type": "service",
+                    "duration": 1800,
+                    "services": [
+                        "Service-05"
+                    ],
+                    "odometer": 8736,
+                    "wait": 0
+                },
+                {
+                    "location": "Walmart Northland Village",
+                    "location_metadata": {
+                        "supplied_coordinate": [
+                            -114.143853,
+                            51.096971
+                        ],
+                        "snapped_coordinate": [
+                            -114.143855,
+                            51.096475
+                        ]
+                    },
+                    "eta": "2023-09-10T15:53:29Z",
+                    "type": "service",
+                    "duration": 1800,
+                    "services": [
+                        "Service-10"
+                    ],
+                    "odometer": 16263,
+                    "wait": 0
+                },
+                {
+                    "location": "Alberta Children's Hospital",
+                    "location_metadata": {
+                        "supplied_coordinate": [
+                            -114.148342,
+                            51.074369
+                        ],
+                        "snapped_coordinate": [
+                            -114.147723,
+                            51.074421
+                        ]
+                    },
+                    "eta": "2023-09-10T16:29:52Z",
+                    "type": "service",
+                    "duration": 3600,
+                    "services": [
+                        "Service-01"
+                    ],
+                    "odometer": 20249,
+                    "wait": 0
+                },
+                {
+                    "location": "Olympic Oval",
+                    "location_metadata": {
+                        "supplied_coordinate": [
+                            -114.135693,
+                            51.076999
+                        ],
+                        "snapped_coordinate": [
+                            -114.136621,
+                            51.076501
+                        ]
+                    },
+                    "eta": "2023-09-10T17:32:48Z",
+                    "type": "service",
+                    "duration": 1800,
+                    "services": [
+                        "Service-03"
+                    ],
+                    "odometer": 21413,
+                    "wait": 0
+                },
+                {
+                    "location": "Walmart Westbrook Mall",
+                    "location_metadata": {
+                        "supplied_coordinate": [
+                            -114.139603,
+                            51.041036
+                        ],
+                        "snapped_coordinate": [
+                            -114.138881,
+                            51.04104
+                        ]
+                    },
+                    "eta": "2023-09-10T18:13:22Z",
+                    "type": "service",
+                    "duration": 7200,
+                    "services": [
+                        "Service-11"
+                    ],
+                    "odometer": 28773,
+                    "wait": 0
+                },
+                {
+                    "location": "Rockyview General Hospital",
+                    "location_metadata": {
+                        "supplied_coordinate": [
+                            -114.097421,
+                            50.990658
+                        ],
+                        "snapped_coordinate": [
+                            -114.096431,
+                            50.990739
+                        ]
+                    },
+                    "eta": "2023-09-10T20:27:49Z",
+                    "type": "service",
+                    "duration": 3600,
+                    "services": [
+                        "Service-06"
+                    ],
+                    "odometer": 37913,
+                    "wait": 0
+                },
+                {
+                    "location": "Walmart Macleod Trail",
+                    "location_metadata": {
+                        "supplied_coordinate": [
+                            -114.069252,
+                            50.965896
+                        ],
+                        "snapped_coordinate": [
+                            -114.069892,
+                            50.965896
+                        ]
+                    },
+                    "eta": "2023-09-10T21:38:31Z",
+                    "type": "service",
+                    "duration": 1800,
+                    "services": [
+                        "Service-08"
+                    ],
+                    "odometer": 42648,
+                    "wait": 0
+                },
+                {
+                    "location": "Ziing Final Mile",
+                    "location_metadata": {
+                        "supplied_coordinate": [
+                            -114.031519,
+                            51.134781
+                        ],
+                        "snapped_coordinate": [
+                            -114.032272,
+                            51.134781
+                        ]
+                    },
+                    "eta": "2023-09-10T22:29:50Z",
+                    "type": "end",
+                    "odometer": 69022
+                }
+            ]
+        }
+    ],
+    "version": 1
+}

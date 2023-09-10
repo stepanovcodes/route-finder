@@ -39,45 +39,45 @@ const Vehicles = (props) => {
   async function handleGet() {
     try {
       const vehiclesData = await getVehicles();
-      if (vehiclesData.length) {
+      // if (vehiclesData.length) {
         setVehicles(vehiclesData);
         setIsVehiclesLoading(false);
-      } else {
-        setIsVehiclesLoading(false);
-        throw Error(vehiclesData);
-      }
+      // } else {
+      //   setIsVehiclesLoading(false);
+      //   throw Error(vehiclesData);
+      // }
       const locationsData = await getLocations()
-      if (locationsData.length) {
-        setLocations(locationsData.map(({ _id, name }) => ({ _id, name })));
+      // if (locationsData.length) {
+        setLocations(locationsData?.map(({ _id, name }) => ({ _id, name })));
         setIsLocationsLoading(false);
-      } else {
-        setIsLocationsLoading(false);
-        throw Error(locationsData);
-      }
+      // } else {
+      //   setIsLocationsLoading(false);
+      //   throw Error(locationsData);
+      // }
       const capacitiesData = await getCapacities()
-      if (capacitiesData.length) {
-        setCapacities(capacitiesData.map(({ _id, name }) => ({ _id, name })));
+      // if (capacitiesData.length) {
+        setCapacities(capacitiesData?.map(({ _id, name }) => ({ _id, name })));
         setIsCapacitiesLoading(false);
-      } else {
-        setIsCapacitiesLoading(false);
-        throw Error(capacitiesData);
-      }
+      // } else {
+      //   setIsCapacitiesLoading(false);
+      //   throw Error(capacitiesData);
+      // }
       const capabilitiesData = await getCapabilities()
-      if (capabilitiesData.length) {
-        setCapabilities(capabilitiesData.map(({ _id, name }) => ({ _id, name })));
+      // if (capabilitiesData.length) {
+        setCapabilities(capabilitiesData?.map(({ _id, name }) => ({ _id, name })));
         setIsCapabilitiesLoading(false);
-      } else {
-        setIsCapabilitiesLoading(false);
-        throw Error(capabilitiesData);
-      }
+      // } else {
+      //   setIsCapabilitiesLoading(false);
+      //   throw Error(capabilitiesData);
+      // }
      const breaksData = await getBreaks()
-     if (breaksData.length) {
-        setBreaks(breaksData.map(({ _id, name }) => ({ _id, name })))
+    //  if (breaksData.length) {
+        setBreaks(breaksData?.map(({ _id, name }) => ({ _id, name })))
         setIsBreaksLoading(false);
-      } else {
-        setIsBreaksLoading(false);
-        throw Error(breaksData);
-      }
+      // } else {
+      //   setIsBreaksLoading(false);
+      //   throw Error(breaksData);
+      // }
     } catch (err) {
       console.log({ err: err.message });
     }

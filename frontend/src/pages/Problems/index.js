@@ -6,7 +6,7 @@ import {
   deleteProblem,
   updateProblem,
   getProblem,
-  pushSubmission
+  pushSubmission,
 } from "../../utilities/problems-service";
 // import {
 //     getLocations,
@@ -96,73 +96,71 @@ const Problems = (props) => {
     try {
       const problemsData = await getProblems();
       //  console.log(problemsData);
-      if (problemsData.length) {
-        setProblems(problemsData);
-        setIsProblemsLoading(false);
-      } else {
-        setIsProblemsLoading(false);
-        throw Error(problemsData);
-      }
+      // if (problemsData.length) {
+      setProblems(problemsData);
+      setIsProblemsLoading(false);
+      // } else {
+      //   setIsProblemsLoading(false);
+      //   throw Error(problemsData);
+      // }
 
       const vehiclesData = await getVehicles();
-      if (vehiclesData.length) {
-        setVehicles(
-          vehiclesData.map(({ _id, name, start_location, end_location }) => ({
-            _id,
-            name,
-            start_location,
-            end_location,
-          }))
-        );
-        setIsVehiclesLoading(false);
-      } else {
-        setIsVehiclesLoading(false);
-        throw Error(vehiclesData);
-      }
+      // if (vehiclesData.length) {
+      setVehicles(
+        vehiclesData.map(({ _id, name, start_location, end_location }) => ({
+          _id,
+          name,
+          start_location,
+          end_location,
+        }))
+      );
+      setIsVehiclesLoading(false);
+      // } else {
+      //   setIsVehiclesLoading(false);
+      //   throw Error(vehiclesData);
+      // }
       const servicesData = await getServices();
-      if (servicesData.length) {
-        setServices(
-          servicesData.map(({ _id, name, location }) => ({
-            _id,
-            name,
-            location,
-          }))
-        );
-        setIsServicesLoading(false);
-      } else {
-        setIsServicesLoading(false);
-        throw Error(servicesData);
-      }
+      // if (servicesData.length) {
+      setServices(
+        servicesData.map(({ _id, name, location }) => ({
+          _id,
+          name,
+          location,
+        }))
+      );
+      setIsServicesLoading(false);
+      // } else {
+      //   setIsServicesLoading(false);
+      //   throw Error(servicesData);
+      // }
       const shipmentsData = await getShipments();
-      if (shipmentsData.length) {
-        setShipments(
-          shipmentsData.map(({ _id, name, from, to }) => ({
-            _id,
-            name,
-            from,
-            to,
-          }))
-        );
-        setIsShipmentsLoading(false);
-      } else {
-        setIsShipmentsLoading(false);
-        throw Error(shipmentsData);
-      }
+      // if (shipmentsData.length) {
+      setShipments(
+        shipmentsData.map(({ _id, name, from, to }) => ({
+          _id,
+          name,
+          from,
+          to,
+        }))
+      );
+      setIsShipmentsLoading(false);
+      // } else {
+      //   setIsShipmentsLoading(false);
+      //   throw Error(shipmentsData);
+      // }
 
-      const submissionsData = await getSubmissions()
+      const submissionsData = await getSubmissions();
       // console.log (submissionsData)
       // console.log (problemsData)
-      setSubmissions(submissionsData)
-      if (submissionsData.length) {
-        setSubmissions(submissionsData);
-        setIsSubmissionsLoading(false);
-        // console.log(submissionsData)
-      } else {
-        setIsSubmissionsLoading(false);
-        throw Error(submissionsData);
-      }
-      
-
+      setSubmissions(submissionsData);
+      // if (submissionsData.length) {
+      setSubmissions(submissionsData);
+      setIsSubmissionsLoading(false);
+      // console.log(submissionsData)
+      // } else {
+      //   setIsSubmissionsLoading(false);
+      //   throw Error(submissionsData);
+      // }
     } catch (err) {
       console.log({ err: err.message });
     }
@@ -201,8 +199,10 @@ const Problems = (props) => {
       const problemDataModified = replaceNestedObjectNames(
         removeIdKeys(problemData)
       );
+      // console.log(problemData)
+      console.log(JSON.stringify(problemDataModified));
       const res = await submitProblem(problemDataModified);
-      await pushSubmission (id, res);
+      await pushSubmission(id, res);
       handleGet();
     } catch (err) {
       console.log({ err: err.message });

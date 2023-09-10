@@ -6,6 +6,7 @@ import Vehicles from "../../pages/Vehicles";
 import Services from "../../pages/Services";
 import Shipments from "../../pages/Shipments";
 import Problems from "../../pages/Problems";
+import Solutions from "../../pages/Solutions";
 
 const Main = () => {
   return (
@@ -17,6 +18,7 @@ const Main = () => {
         <Route path="/services" element={<Services />} />
         <Route path="/shipments" element={<Shipments />} />
         <Route path="/problems" element={<Problems />} />
+        <Route path="/solutions" element={<Solutions />} />
         <Route path="/*" element={<NotFound404/>}/>
       </Routes>
     </main>

@@ -14,7 +14,7 @@ const { Capacity } = require("../models");
 async function index(req, res, next) {
   try {
     // get all Capacitys
-    res.status(200).json(await Capacity.find({}));
+    res.status(200).json(await Capacity.find({}).sort("name"));
   } catch (error) {
     //send error
     res.status(400).json({ error: error.message });

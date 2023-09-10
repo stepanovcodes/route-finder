@@ -14,7 +14,7 @@ const { Location } = require("../models");
 async function index(req, res, next) {
   try {
     // get all locations
-    res.status(200).json(await Location.find({}));
+    res.status(200).json(await Location.find({}).sort("name"));
   } catch (error) {
     //send error
     res.status(400).json({ error: error.message });
