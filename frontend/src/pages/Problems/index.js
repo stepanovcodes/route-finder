@@ -152,7 +152,7 @@ const Problems = (props) => {
       const submissionsData = await getSubmissions();
       // console.log (submissionsData)
       // console.log (problemsData)
-      setSubmissions(submissionsData);
+      // setSubmissions(submissionsData);
       // if (submissionsData.length) {
       setSubmissions(submissionsData);
       setIsSubmissionsLoading(false);
@@ -200,7 +200,7 @@ const Problems = (props) => {
         removeIdKeys(problemData)
       );
       // console.log(problemData)
-      console.log(JSON.stringify(problemDataModified));
+      // console.log(JSON.stringify(problemDataModified));
       const res = await submitProblem(problemDataModified);
       await pushSubmission(id, res);
       handleGet();

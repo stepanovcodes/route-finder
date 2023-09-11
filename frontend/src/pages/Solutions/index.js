@@ -1,17 +1,20 @@
 import mapboxgl from "mapbox-gl";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
-import geoJson from "./solution.json";
+// import geoJson from "./solution.json";
 import {
   TruckIcon,
   WrenchIcon,
   FlagIcon,
   MapPinIcon,
 } from "@heroicons/react/24/solid";
+import { getProblems } from "../../utilities/problems-service";
+import { getSolution } from "../../utilities/mapbox-service";
+import SolutionCard from "../../components/SolutionCard";
 import "./Solutions.css";
 
 mapboxgl.accessToken =
-  "pk.eyJ1Ijoic3RlcGFub3Zjb2RlcyIsImEiOiJjbGxzdjVuc2kwMTBuM2VxdGpzcHRtMnl4In0.r0XemjswrRcT_waet1Ra-A";
+  process.env.REACT_APP_ACCESS_TOKEN;
 
 const ContrastColors = [
   "#0074D9", // Blue
@@ -76,13 +79,21 @@ const Marker = ({
 };
 
 const Solutions = () => {
+  const [isProblemsLoading, setIsProblemsLoading] = useState(true);
+  const [isSolutionLoading, setIsSolutionLoading] = useState(true);
+  const [problems, setProblems] = useState([]);
+  const [solution, setSolution] = useState(null);
   const mapContainerRef = useRef(null);
+   // Declare mapRef as a useRef
+   const mapRef = useRef(null);
+
   // const popupRef = useRef(
   //   new mapboxgl.Popup({ closeButton: false, closeOnClick: false })
   // );
 
   // Initialize map when component mounts
   useEffect(() => {
+    handleGet();
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/navigation-day-v1",
@@ -90,60 +101,10 @@ const Solutions = () => {
       zoom: 10,
     });
 
-    // Render custom marker components
-    geoJson.routes.forEach((route, routeIndex) => {
-      let stopNumber = 0;
-      let backgroundColorByRoute = ContrastColors[routeIndex];
-      route.stops.forEach((stop) => {
-        if (
-          stop.type === "start" ||
-          stop.type === "service" ||
-          stop.type === "pickup" ||
-          stop.type === "dropoff" ||
-          stop.type === "end"
-        ) {
-          stopNumber++;
-          // Create a popup, but don't add it to the map yet.
-          const popup = new mapboxgl.Popup({
-            // closeButton: false,
-            // closeOnClick: false,
-            offset: 25,
-          }).setHTML(`
-          <h1 style="font-weight: bold">${stop.location}</h1>
-          <h1 style="font-weight: bold">${route.vehicle}, stop#${stopNumber}</h1>
-          <p>Coordinates: ${stop.location_metadata.supplied_coordinate[0]}, ${stop.location_metadata.supplied_coordinate[1]}</p>
-          <p>ETA: ${isoToDatetimeLocal(stop.eta)}</p>
-          <p>Type: ${stop.type}</p>
-          ${stop.services ? `<p>Services: ${stop.services.join(', ')}</p>` : ''}
-          ${stop.duration ? `<p>Duration: ${stop.duration/60} min</p>` : ''}
-          ${stop.wait ? `<p>Duration: ${stop.wait/60} min</p>` : ''}
-          ${stop.odometer ? `<p>Odometer: ${stop.odometer/1000} km</p>` : ''}
-        `);
+    // Set mapRef to the map instance
+    mapRef.current = map;
 
-          // Create a React ref
-          const ref = React.createRef();
 
-          // Create a new DOM node and save it to the React ref
-          ref.current = document.createElement("div");
-          // Render a Marker Component on our new DOM node
-          createRoot(ref.current).render(
-            <Marker
-              /*onClick={markerClicked}*/
-              stop={stop}
-              type={stop.type}
-              stopNumber={stopNumber}
-              backgroundColorByRoute={backgroundColorByRoute}
-            />
-          );
-
-          // Create a Mapbox Marker at our new DOM node
-          new mapboxgl.Marker(ref.current)
-            .setLngLat(stop.location_metadata.supplied_coordinate)
-            .setPopup(popup)
-            .addTo(map);
-        }
-      });
-    });
 
     // Add navigation control (the +/- zoom buttons)
     map.addControl(new mapboxgl.NavigationControl(), "top-right");
@@ -152,11 +113,111 @@ const Solutions = () => {
     return () => map.remove();
   }, []);
 
+  async function handleGet() {
+    try {
+      const problemsData = await getProblems();
+      setProblems(problemsData);
+      setIsProblemsLoading(false);
+      // console.log(problemsData);
+    } catch (err) {
+      console.log({ err: err.message });
+    }
+  }
+
+  async function handleGetSolution(id) {
+    try {
+      const solutionData = await getSolution(id);
+      setSolution(solutionData);
+      setIsSolutionLoading(false);
+
+      const map = mapRef.current
+
+      solutionData.routes.forEach((route, routeIndex) => {
+        let stopNumber = 0;
+        let backgroundColorByRoute = ContrastColors[routeIndex];
+        route.stops.forEach((stop) => {
+          if (
+            stop.type === "start" ||
+            stop.type === "service" ||
+            stop.type === "pickup" ||
+            stop.type === "dropoff" ||
+            stop.type === "end"
+          ) {
+            stopNumber++;
+            // Create a popup, but don't add it to the map yet.
+            const popup = new mapboxgl.Popup({
+              // closeButton: false,
+              // closeOnClick: false,
+              offset: 25,
+            }).setHTML(`
+            <h1 style="font-weight: bold">${stop.location}</h1>
+            <h1 style="font-weight: bold">${
+              route.vehicle
+            }, stop#${stopNumber}</h1>
+            <p>Coordinates: ${stop.location_metadata.supplied_coordinate[0]}, ${
+              stop.location_metadata.supplied_coordinate[1]
+            }</p>
+            <p>ETA: ${isoToDatetimeLocal(stop.eta)}</p>
+            <p>Type: ${stop.type}</p>
+            ${stop.services ? `<p>Services: ${stop.services.join(", ")}</p>` : ""}
+            ${stop.duration ? `<p>Duration: ${stop.duration / 60} min</p>` : ""}
+            ${stop.wait ? `<p>Duration: ${stop.wait / 60} min</p>` : ""}
+            ${stop.odometer ? `<p>Odometer: ${stop.odometer / 1000} km</p>` : ""}
+          `);
+  
+            // Create a React ref
+            const ref = React.createRef();
+  
+            // Create a new DOM node and save it to the React ref
+            ref.current = document.createElement("div");
+            // Render a Marker Component on our new DOM node
+  
+            createRoot(ref.current).render(
+              <Marker
+                /*onClick={markerClicked}*/
+                stop={stop}
+                type={stop.type}
+                stopNumber={stopNumber}
+                backgroundColorByRoute={backgroundColorByRoute}
+              />
+            );
+  
+            // Create a Mapbox Marker at our new DOM node
+            new mapboxgl.Marker(ref.current)
+              .setLngLat(stop.location_metadata.supplied_coordinate)
+              .setPopup(popup)
+              .addTo(map);
+          }
+        });
+      });
+    } catch (err) {
+      console.log({ err: err.message });
+    }
+  }
+
   // const markerClicked = (title) => {
   //   window.alert(title);
   // };
 
-  return <div className="map-container" ref={mapContainerRef} />;
+  return (
+    <>
+       <h1 className="text-2xl font-bold tracking-tight">
+          {"solutions".toUpperCase()}
+        </h1>
+      {!isProblemsLoading ? (
+        <SolutionCard
+          problems={problems}
+          handleGetSolution={handleGetSolution}
+          isSolutionLoading={isSolutionLoading}
+          solution={solution}
+        />
+        
+      ) : (
+        ""
+      )}
+      <div className="map-container" ref={mapContainerRef} />
+    </>
+  );
 };
 
 export default Solutions;

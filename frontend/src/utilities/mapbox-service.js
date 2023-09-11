@@ -56,7 +56,7 @@ export async function getSubmissions(data) {
     }
   }
 
-  export async function getSolution(id,data) {
+  export async function getSolution(id) {
 
     const accessToken = process.env.REACT_APP_ACCESS_TOKEN
     const url = `https://api.mapbox.com/optimized-trips/v2/${id}?access_token=${accessToken}`;
