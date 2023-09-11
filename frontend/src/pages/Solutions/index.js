@@ -13,8 +13,7 @@ import { getSolution } from "../../utilities/mapbox-service";
 import SolutionCard from "../../components/SolutionCard";
 import "./Solutions.css";
 
-mapboxgl.accessToken =
-  process.env.REACT_APP_ACCESS_TOKEN;
+mapboxgl.accessToken = process.env.REACT_APP_ACCESS_TOKEN;
 
 const ContrastColors = [
   "#0074D9", // Blue
@@ -84,8 +83,9 @@ const Solutions = () => {
   const [problems, setProblems] = useState([]);
   const [solution, setSolution] = useState(null);
   const mapContainerRef = useRef(null);
-   // Declare mapRef as a useRef
-   const mapRef = useRef(null);
+  // Declare mapRef as a useRef
+  const mapRef = useRef(null);
+  const [markers, setMarkers] = useState([]);
 
   // const popupRef = useRef(
   //   new mapboxgl.Popup({ closeButton: false, closeOnClick: false })
@@ -103,8 +103,6 @@ const Solutions = () => {
 
     // Set mapRef to the map instance
     mapRef.current = map;
-
-
 
     // Add navigation control (the +/- zoom buttons)
     map.addControl(new mapboxgl.NavigationControl(), "top-right");
@@ -130,7 +128,15 @@ const Solutions = () => {
       setSolution(solutionData);
       setIsSolutionLoading(false);
 
-      const map = mapRef.current
+      const map = mapRef.current;
+
+      // Remove existing markers
+      markers.forEach((marker) => {
+        marker.remove();
+      });
+
+      // Clear the list of markers
+      setMarkers([]);
 
       solutionData.routes.forEach((route, routeIndex) => {
         let stopNumber = 0;
@@ -159,19 +165,25 @@ const Solutions = () => {
             }</p>
             <p>ETA: ${isoToDatetimeLocal(stop.eta)}</p>
             <p>Type: ${stop.type}</p>
-            ${stop.services ? `<p>Services: ${stop.services.join(", ")}</p>` : ""}
+            ${
+              stop.services
+                ? `<p>Services: ${stop.services.join(", ")}</p>`
+                : ""
+            }
             ${stop.duration ? `<p>Duration: ${stop.duration / 60} min</p>` : ""}
             ${stop.wait ? `<p>Duration: ${stop.wait / 60} min</p>` : ""}
-            ${stop.odometer ? `<p>Odometer: ${stop.odometer / 1000} km</p>` : ""}
+            ${
+              stop.odometer ? `<p>Odometer: ${stop.odometer / 1000} km</p>` : ""
+            }
           `);
-  
+
             // Create a React ref
             const ref = React.createRef();
-  
+
             // Create a new DOM node and save it to the React ref
             ref.current = document.createElement("div");
             // Render a Marker Component on our new DOM node
-  
+
             createRoot(ref.current).render(
               <Marker
                 /*onClick={markerClicked}*/
@@ -181,12 +193,15 @@ const Solutions = () => {
                 backgroundColorByRoute={backgroundColorByRoute}
               />
             );
-  
+
             // Create a Mapbox Marker at our new DOM node
-            new mapboxgl.Marker(ref.current)
+            const marker = new mapboxgl.Marker(ref.current)
               .setLngLat(stop.location_metadata.supplied_coordinate)
               .setPopup(popup)
               .addTo(map);
+
+            // Add the new marker to the list of markers
+            setMarkers((prevMarkers) => [...prevMarkers, marker]);
           }
         });
       });
@@ -201,9 +216,9 @@ const Solutions = () => {
 
   return (
     <>
-       <h1 className="text-2xl font-bold tracking-tight">
-          {"solutions".toUpperCase()}
-        </h1>
+      <h1 className="text-2xl font-bold tracking-tight">
+        {"solutions".toUpperCase()}
+      </h1>
       {!isProblemsLoading ? (
         <SolutionCard
           problems={problems}
@@ -211,7 +226,6 @@ const Solutions = () => {
           isSolutionLoading={isSolutionLoading}
           solution={solution}
         />
-        
       ) : (
         ""
       )}
