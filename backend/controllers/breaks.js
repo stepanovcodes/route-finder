@@ -14,7 +14,7 @@ const { Break } = require("../models");
 async function index(req, res, next) {
   try {
     // get all Breaks
-    res.status(200).json(await Break.find({}));
+    res.status(200).json(await Break.find({}).sort("name"));
   } catch (error) {
     //send error
     res.status(400).json({ error: error.message });

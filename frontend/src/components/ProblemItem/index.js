@@ -4,18 +4,25 @@ import {
   TrashIcon,
   CheckIcon,
   XMarkIcon,
+  ArrowUpTrayIcon,
+  HandThumbUpIcon,
+  EllipsisHorizontalIcon,
+  BoltIcon,
+  CheckCircleIcon,
 } from "@heroicons/react/24/outline";
 import Select from "react-select";
 import DeleteConfirmation from "../DeleteConfirmation";
 
-function Item({
+function ProblemItem({
   inputItem,
   headers,
   handleEdit,
   hideIcons,
   handleDelete,
   handleUpdate,
+  handleSubmitProblem,
   dropdownLists,
+  submissions,
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -43,8 +50,6 @@ function Item({
       }
     })
   );
-
-
 
   // const initialDisplayedRow = Object.fromEntries(
   //   headers.map((header) => {
@@ -144,6 +149,10 @@ function Item({
     setIsDeleteConfirmationOpen(true);
   };
 
+  const handleArrowUpTrayIconClick = () => {
+    handleSubmitProblem(inputItem._id);
+  };
+
   const closeDialog = () => {
     setIsDeleteConfirmationOpen(false);
     setIsHovered(false);
@@ -163,8 +172,9 @@ function Item({
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
+          <td className="border-b"></td>
           {headers.map((header) => (
-            <td key={header} className=" px4 py-2 whitespace-no-wrap">
+            <td key={header} className=" px4 py-2 whitespace-no-wrap border-b">
               {header === "routing_profile" ? (
                 <>
                   <select
@@ -373,6 +383,41 @@ function Item({
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
+          <td className="border-b">
+            <div className="group flex h-7 w-7 items-center justify-center rounded-lg bg-white">
+              {submissions.find(
+                (item) => item.id === inputItem.submissions[0].id
+              )?.status === "complete" ? (
+                <CheckCircleIcon
+                  className="h-6 w-6 text-gray-600"
+                  aria-hidden="true"
+                />
+              ) : submissions.find(
+                  (item) => item.id === inputItem.submissions[0].id
+                )?.status === "processing" ? (
+                <BoltIcon
+                  className="h-6 w-6 text-gray-600"
+                  aria-hidden="true"
+                />
+              ) : submissions.find(
+                  (item) => item.id === inputItem.submissions[0].id
+                )?.status === "ok" ? (
+                <HandThumbUpIcon
+                  className="h-6 w-6 text-gray-600"
+                  aria-hidden="true"
+                />
+              ) : submissions.find(
+                  (item) => item.id === inputItem.submissions[0].id
+                )?.status === "pending" ? (
+                <EllipsisHorizontalIcon
+                  className="h-6 w-6 text-gray-600"
+                  aria-hidden="true"
+                />
+              ) : (
+                <></>
+              )}
+            </div>
+          </td>
           {headers.map((header) => (
             <td key={header} className=" px4 py-2 whitespace-no-wrap border-b">
               <div className="w-full px-2 py-2 border-2 border-white rounded">
@@ -397,7 +442,11 @@ function Item({
                   : header === "vehicles" ||
                     header === "services" ||
                     header === "shipments"
-                  ? editedRow[header].map(({label}) => {return label}).join(', ')
+                  ? editedRow[header]
+                      .map(({ label }) => {
+                        return label;
+                      })
+                      .join(", ")
                   : editedRow[header]}
               </div>
             </td>
@@ -411,6 +460,21 @@ function Item({
             >
               {isHovered && !hideIcons && (
                 <PencilSquareIcon
+                  className="h-6 w-6 text-gray-600 hover:text-indigo-600"
+                  aria-hidden="true"
+                />
+              )}
+            </div>
+          </td>
+          <td>
+            <div
+              className={`group flex h-7 w-7 items-center justify-center rounded-lg bg-white ${
+                !hideIcons ? " cursor-pointer hover:bg-gray-50" : ""
+              }`}
+              onClick={!hideIcons ? handleArrowUpTrayIconClick : null}
+            >
+              {isHovered && !hideIcons && (
+                <ArrowUpTrayIcon
                   className="h-6 w-6 text-gray-600 hover:text-indigo-600"
                   aria-hidden="true"
                 />
@@ -445,4 +509,4 @@ function Item({
   );
 }
 
-export default Item;
+export default ProblemItem;

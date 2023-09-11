@@ -1,82 +1,55 @@
 import { useState, useEffect} from "react";
 import { Spinner } from "@fluentui/react-components";
 import {
-  getVehicles,
-  createVehicle,
-  deleteVehicle,
-  updateVehicle,
-} from "../../utilities/vehicles-service";
+  getShipments,
+  createShipment,
+  deleteShipment,
+  updateShipment,
+} from "../../utilities/shipments-service";
 import {
     getLocations,
   } from "../../utilities/locations-service";
   import {
-    getCapacities,
-  } from "../../utilities/capacities-service";
-  import {
     getCapabilities,
   } from "../../utilities/capabilities-service";
-  import {
-    getBreaks,
-  } from "../../utilities/breaks-service";
-// import { DataContext } from "../../data/DataContext";
 import List from "../../components/List";
 
 
-const Vehicles = (props) => {
-  const [isVehiclesLoading, setIsVehiclesLoading] = useState(true);
+const Shipments = (props) => {
+  const [isShipmentsLoading, setIsShipmentsLoading] = useState(true);
   const [isLocationsLoading, setIsLocationsLoading] = useState(true);
-  const [isCapacitiesLoading, setIsCapacitiesLoading] = useState(true);
   const [isCapabilitiesLoading, setIsCapabilitiesLoading] = useState(true);
-  const [isBreaksLoading, setIsBreaksLoading] = useState(true);
-  const [vehicles, setVehicles] = useState([]);
+  const [shipments, setShipments] = useState([]);
   const [locations, setLocations] = useState([]);
-  const [capacities, setCapacities] = useState([]);
   const [capabilities, setCapabilities] = useState([]);
-  const [breaks, setBreaks] = useState([]);
-  const title=`vehicles`;
-  const headers=["name","routing_profile","start_location","end_location","capacities", "capabilities", "earliest_start", "latest_end", "breaks", "loading_policy"];
+  const title=`shipments`;
+  const headers=["name","from","to","weight","volume","boxes","requirements", "pickup_duration","dropoff_duration","earliest_pickup", "latest_pickup", "type_pickup","earliest_dropoff", "latest_dropoff", "type_dropoff"];
 
   async function handleGet() {
     try {
-      const vehiclesData = await getVehicles();
-      // if (vehiclesData.length) {
-        setVehicles(vehiclesData);
-        setIsVehiclesLoading(false);
+      const shipmentsData = await getShipments();
+      // if (shipmentsData.length) {
+        setShipments(shipmentsData);
+        setIsShipmentsLoading(false);
       // } else {
-      //   setIsVehiclesLoading(false);
-      //   throw Error(vehiclesData);
+      //   setIsShipmentsLoading(false);
+      //   throw Error(shipmentsData);
       // }
       const locationsData = await getLocations()
       // if (locationsData.length) {
-        setLocations(locationsData?.map(({ _id, name }) => ({ _id, name })));
+        setLocations(locationsData.map(({ _id, name }) => ({ _id, name })));
         setIsLocationsLoading(false);
       // } else {
       //   setIsLocationsLoading(false);
       //   throw Error(locationsData);
       // }
-      const capacitiesData = await getCapacities()
-      // if (capacitiesData.length) {
-        setCapacities(capacitiesData?.map(({ _id, name }) => ({ _id, name })));
-        setIsCapacitiesLoading(false);
-      // } else {
-      //   setIsCapacitiesLoading(false);
-      //   throw Error(capacitiesData);
-      // }
       const capabilitiesData = await getCapabilities()
       // if (capabilitiesData.length) {
-        setCapabilities(capabilitiesData?.map(({ _id, name }) => ({ _id, name })));
+        setCapabilities(capabilitiesData.map(({ _id, name }) => ({ _id, name })));
         setIsCapabilitiesLoading(false);
       // } else {
       //   setIsCapabilitiesLoading(false);
       //   throw Error(capabilitiesData);
-      // }
-     const breaksData = await getBreaks()
-    //  if (breaksData.length) {
-        setBreaks(breaksData?.map(({ _id, name }) => ({ _id, name })))
-        setIsBreaksLoading(false);
-      // } else {
-      //   setIsBreaksLoading(false);
-      //   throw Error(breaksData);
       // }
     } catch (err) {
       console.log({ err: err.message });
@@ -85,7 +58,7 @@ const Vehicles = (props) => {
 
   async function handleCreate(newRow) {
     try {
-      await createVehicle(newRow);
+      await createShipment(newRow);
       handleGet();
     } catch (err) {
       console.log({ err: err.message });
@@ -94,7 +67,7 @@ const Vehicles = (props) => {
 
   async function handleDelete(id) {
     try {
-      await deleteVehicle(id);
+      await deleteShipment(id);
       handleGet();
     } catch (err) {
       console.log({ err: err.message });
@@ -103,7 +76,7 @@ const Vehicles = (props) => {
 
   async function handleUpdate(id, editedRow) {
     try {
-      await updateVehicle(id, editedRow);
+      await updateShipment(id, editedRow);
       handleGet();
     } catch (err) {
       console.log({ err: err.message });
@@ -120,12 +93,12 @@ const Vehicles = (props) => {
         <h1 className="text-2xl font-bold tracking-tight">{title.toUpperCase()}</h1>
         {/* <DataContext.Provider value={locations}> */}
         <List
-          inputArray={vehicles}
+          inputArray={shipments}
           handleCreate={handleCreate}
           handleDelete={handleDelete}
           handleUpdate={handleUpdate}
           headers={headers}
-          dropdownLists={{locations,capacities,capabilities, breaks}}
+          dropdownLists={{locations,capabilities}}
         />
         {/* </DataContext.Provider> */}
       </>
@@ -141,7 +114,7 @@ const Vehicles = (props) => {
     </div>
   );
 
-  return isVehiclesLoading || isCapacitiesLoading || isCapabilitiesLoading || isBreaksLoading || isLocationsLoading ? loading() : loaded();
+  return isShipmentsLoading || isCapabilitiesLoading || isLocationsLoading ? loading() : loaded();
 };
 
-export default Vehicles;
+export default Shipments;

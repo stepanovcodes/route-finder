@@ -2,7 +2,7 @@ import { useState /*useContext*/ } from "react";
 import { Button } from "@fluentui/react-components";
 // import {DataContext} from "../../data/DataContext"
 import Select from "react-select";
-import "./NewRowItem.css";
+import "./NewRowProblemItem.css";
 
 function getCurrentDateTime() {
   const now = new Date();
@@ -17,7 +17,7 @@ function getCurrentDateTime() {
   return currentDateTime;
 }
 
-function NewRowItem({ handleCreate, headers, dropdownLists }) {
+function NewRowProblemItem({ handleCreate, headers, dropdownLists }) {
   // console.log(dropdownLists)
 
   const initialAddRow = Object.fromEntries(
@@ -120,8 +120,8 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
       return defaultSelection;
     })
   );
-  // if (headers.includes("vehicles")) initialAddRow.locations = null;
-// console.log(initialAddRow)
+//   initialAddRow.submissions= { id: "", status: "" };
+  // console.log(initialAddRow)
   const [newRow, setNewRow] = useState(initialAddRow);
   // const locations = useContext(DataContext);
 
@@ -172,7 +172,6 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
     //   handleValidation(true)
     // Initialize an object to store key mappings for location fields
 
-
     handleCreate(newRow);
     setNewRow(initialAddRow);
     // } else {
@@ -185,6 +184,7 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
   return (
     <>
       <tr className="group p-4 mb-4">
+        <td></td>
         {headers.map((header) => (
           <td key={header} className=" px4 py-2 whitespace-no-wrap">
             {header === "routing_profile" ? (
@@ -373,7 +373,9 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
         </td>
       </tr>
       <tr className="group p-4 mb-4">
+        <td></td>
         <td>
+          {" "}
           <Button appearance="primary" onClick={handleAddRow}>
             Add Row
           </Button>
@@ -383,4 +385,4 @@ function NewRowItem({ handleCreate, headers, dropdownLists }) {
   );
 }
 
-export default NewRowItem;
+export default NewRowProblemItem;

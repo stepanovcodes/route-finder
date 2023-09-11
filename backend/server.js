@@ -25,6 +25,7 @@ const breaksRouter = require("./routes/breaks");
 const vehiclesRouter = require("./routes/vehicles");
 const servicesRouter = require("./routes/services");
 const shipmentsRouter = require("./routes/shipments");
+const problemsRouter = require("./routes/problems");
 
 const cors = require("cors");
 const morgan = require("morgan");
@@ -51,6 +52,8 @@ app.use("/vehicles", vehiclesRouter);
 app.use("/services", servicesRouter);
 // all requests for endpoints that begin with '/shipments'
 app.use("/shipments", shipmentsRouter);
+// all requests for endpoints that begin with '/problems'
+app.use("/problems", problemsRouter);
 ///////////////////////////////
 // ROUTES
 ////////////////////////////////

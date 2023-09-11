@@ -14,7 +14,7 @@ const { Shipment } = require("../models");
 async function index(req, res, next) {
   try {
     // get all Shipments
-    res.status(200).json(await Shipment.find({}));
+    res.status(200).json(await Shipment.find({}).sort("name").populate("from","name").populate("to","name").populate("requirements","name"));
   } catch (error) {
     //send error
     res.status(400).json({ error: error.message });
