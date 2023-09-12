@@ -5,7 +5,6 @@ import * as shipmentsAPI from "./shipments-api";
 export async function getShipments() {
   try {
     const data = await shipmentsAPI.index();
-    // console.log(data)
     const modifiedData = data.map(item => ({
         ...item,
         weight: item.size.weight,
@@ -19,7 +18,6 @@ export async function getShipments() {
         latest_dropoff: isoToDatetimeLocal(item.dropoff_times[0].latest),
         type_dropoff: item.dropoff_times[0].type,
       }));
-    // console.log(modifiedData)
     return modifiedData;
   } catch (err) {
     console.log(err);

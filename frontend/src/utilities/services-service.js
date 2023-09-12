@@ -5,16 +5,13 @@ import * as servicesAPI from "./services-api";
 export async function getServices() {
   try {
     const data = await servicesAPI.index();
-    // console.log(data)
     const modifiedData = data.map(item => ({
-        // service_times,
         ...item,
         requirements: item.requirements[0],
         earliest: isoToDatetimeLocal(item.service_times[0].earliest),
         latest: isoToDatetimeLocal(item.service_times[0].latest),
         type: item.service_times[0].type,
       }));
-    // console.log(modifiedData)
     return modifiedData;
   } catch (err) {
     console.log(err);
@@ -28,9 +25,6 @@ export async function createService(data){
             ...data,
             service_times: [{earliest: new Date(data.earliest).toISOString(), latest: new Date(data.latest).toISOString(), type: data.type}],
             requirements: [data.requirements],
-            // earliest,
-            // latest,
-            // type,
           }
         const newService = await servicesAPI.create(modifiedData)
         return newService
@@ -57,9 +51,6 @@ export async function updateService(id,data){
             ...data,
             service_times: [{earliest: new Date(data.earliest).toISOString(), latest: new Date(data.latest).toISOString(), type: data.type}],
             requirements: [data.requirements],
-            // earliest,
-            // latest,
-            // type,
           }
         const updatedService = await servicesAPI.update(id,modifiedData)
         return updatedService

@@ -1,8 +1,4 @@
 import mapboxgl from 'mapbox-gl';
-// // eslint-disable-next-line import/no-webpack-loader-syntax
-// mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
-// import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp';
-// import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker'; // Load worker code separately with worker-loader
 import React, { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 // import geoJson from "./solution.json";
@@ -44,22 +40,15 @@ function isoToDatetimeLocal(isoString) {
 }
 
 const Marker = ({
-  /*onClick,*/
   children,
   stop,
   type,
   stopNumber,
   backgroundColorByRoute,
 }) => {
-  // const _onClick = () => {
-  //   onClick(stop.location);
-  // };
 
   return (
-    // <button onClick={_onClick} className="marker">
-    //   {children}
-    // </button>
-    <div className="marker" /*onClick={_onClick}*/>
+    <div className="marker" >
       {children}
       {type === "start" || type === "end" ? (
         <FlagIcon />
@@ -76,7 +65,6 @@ const Marker = ({
       >
         {stopNumber}
       </div>
-      {/* <div className="marker-text">{feature.properties.title}</div> */}
     </div>
   );
 };
@@ -90,10 +78,6 @@ const Solutions = () => {
   // Declare mapRef as a useRef
   const mapRef = useRef(null);
   const [markers, setMarkers] = useState([]);
-
-  // const popupRef = useRef(
-  //   new mapboxgl.Popup({ closeButton: false, closeOnClick: false })
-  // );
 
   // Initialize map when component mounts
   useEffect(() => {
@@ -120,7 +104,6 @@ const Solutions = () => {
       const problemsData = await getProblems();
       setProblems(problemsData);
       setIsProblemsLoading(false);
-      // console.log(problemsData);
     } catch (err) {
       console.log({ err: err.message });
     }
@@ -156,8 +139,6 @@ const Solutions = () => {
             stopNumber++;
             // Create a popup, but don't add it to the map yet.
             const popup = new mapboxgl.Popup({
-              // closeButton: false,
-              // closeOnClick: false,
               offset: 25,
             }).setHTML(`
             <h1 style="font-weight: bold">${stop.location}</h1>
@@ -190,7 +171,6 @@ const Solutions = () => {
 
             createRoot(ref.current).render(
               <Marker
-                /*onClick={markerClicked}*/
                 stop={stop}
                 type={stop.type}
                 stopNumber={stopNumber}
@@ -213,10 +193,6 @@ const Solutions = () => {
       console.log({ err: err.message });
     }
   }
-
-  // const markerClicked = (title) => {
-  //   window.alert(title);
-  // };
 
   return (
     <>

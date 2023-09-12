@@ -28,7 +28,6 @@ function ProblemItem({
   const [isEditing, setIsEditing] = useState(false);
   const initialEditedRow = Object.fromEntries(
     headers.map((header) => {
-      // console.log(header, inputItem[header])
       if (header === "longitude") {
         return [header, inputItem.coordinates[0]];
       } else if (header === "latitude") {
@@ -51,27 +50,9 @@ function ProblemItem({
     })
   );
 
-  // const initialDisplayedRow = Object.fromEntries(
-  //   headers.map((header) => {
-  //     // console.log(header, inputItem[header])
-  //     if (header === "longitude") {
-  //       return [header, inputItem.coordinates[0]];
-  //     } else if (header === "latitude") {
-  //       return [header, inputItem.coordinates[1]];
-  //     } else if (header === "breaks" || header === "capabilities"|| header === "capacities" || header === "start_location" || header === "end_location") {
-  //       return [header, inputItem[header].name];
-  //     } else {
-  //       return [header, inputItem[header]];
-  //     }
-  //   })
-  // );
-  // console.log("initialEditedRow", initialEditedRow)
   const [editedRow, setEditedRow] = useState(initialEditedRow);
-  // const [displayedRow] = useState(initialDisplayedRow);
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] =
     useState(false);
-
-  // console.log(dropdownLists)
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -80,63 +61,16 @@ function ProblemItem({
 
   function handleMultiSelectChange(e, metadata) {
     setEditedRow({ ...editedRow, [metadata.name]: e });
-    // console.log(dropdownLists)
-    // console.log(editedRow)
-    // console.log(e);
-    // console.log(editedRow);
   }
 
   const handleChange = (e) => {
     setEditedRow({ ...editedRow, [e.target.name]: e.target.value });
-    // console.log( editedRow)
-    // if (e.target.name === "latitude") {
-    //   if (
-    //     isNaN(e.target.value) ||
-    //     parseFloat(e.target.value) < -90 ||
-    //     parseFloat(e.target.value) > 90
-    //   ) {
-    //     // Invalid latitude
-    //     e.target.setCustomValidity("Latitude must be between -90 and 90.");
-    //   } else {
-    //     // Valid latitude
-    //     e.target.setCustomValidity("");
-    //   }
-    // } else if (e.target.name === "longitude") {
-    //   if (
-    //     isNaN(e.target.value) ||
-    //     parseFloat(e.target.value) < -180 ||
-    //     parseFloat(e.target.value) > 180
-    //   ) {
-    //     // Invalid latitude
-    //     e.target.setCustomValidity("Longitude must be between -180 and 180.");
-    //   } else {
-    //     // Valid latitude
-    //     e.target.setCustomValidity("");
-    //   }
-    // } else if (!e.target.value) {
-    //   e.target.setCustomValidity(`${e.target.name} required.`);
-    // }
   };
 
   const handleUpdateClick = () => {
-    // console.log(inputItem._id, editedRow);
-    // const nameInput = document.getElementById("input-name");
-    // const latitudeInput = document.getElementById("input-latitude");
-    // const longitudeInput = document.getElementById("input-longitude");
-
-    // // Check the validity of each field
-    // const isNameValid = nameInput.checkValidity();
-    // const isLatitudeValid = latitudeInput.checkValidity();
-    // const isLongitudeValid = longitudeInput.checkValidity();
-    // console.log(`isNameValid = ${isNameValid}, isLatitudeValid = ${isLatitudeValid}, isLongitudeValid = ${isLongitudeValid}`)
-    // if (isNameValid && isLatitudeValid && isLongitudeValid) {
     handleUpdate(inputItem._id, editedRow);
     setIsEditing(false);
     handleEdit(false);
-    // console.log( editedRow)
-    // } else {
-    // console.log(`isNameValid = ${isNameValid}, isLatitudeValid = ${isLatitudeValid}, isLongitudeValid = ${isLongitudeValid}`)
-    // }
   };
 
   const handleCancelClick = () => {
@@ -303,7 +237,6 @@ function ProblemItem({
                 header === "shipments" ? (
                 <div className="w-full border-2 rounded focus:outline-none focus:border-blue-500 control-height">
                   <Select
-                    // defaultValue={dropdownLists[header].map(({_id, name}) =>{return {value: _id, label: name}})[0]}
                     isMulti
                     name={header}
                     value={editedRow[header]}

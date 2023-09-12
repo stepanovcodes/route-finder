@@ -28,29 +28,14 @@ const Shipments = (props) => {
   async function handleGet() {
     try {
       const shipmentsData = await getShipments();
-      // if (shipmentsData.length) {
         setShipments(shipmentsData);
         setIsShipmentsLoading(false);
-      // } else {
-      //   setIsShipmentsLoading(false);
-      //   throw Error(shipmentsData);
-      // }
       const locationsData = await getLocations()
-      // if (locationsData.length) {
         setLocations(locationsData.map(({ _id, name }) => ({ _id, name })));
         setIsLocationsLoading(false);
-      // } else {
-      //   setIsLocationsLoading(false);
-      //   throw Error(locationsData);
-      // }
       const capabilitiesData = await getCapabilities()
-      // if (capabilitiesData.length) {
         setCapabilities(capabilitiesData.map(({ _id, name }) => ({ _id, name })));
         setIsCapabilitiesLoading(false);
-      // } else {
-      //   setIsCapabilitiesLoading(false);
-      //   throw Error(capabilitiesData);
-      // }
     } catch (err) {
       console.log({ err: err.message });
     }
@@ -91,7 +76,6 @@ const Shipments = (props) => {
     return (
       <>
         <h1 className="text-2xl font-bold tracking-tight">{title.toUpperCase()}</h1>
-        {/* <DataContext.Provider value={locations}> */}
         <List
           inputArray={shipments}
           handleCreate={handleCreate}
@@ -100,7 +84,6 @@ const Shipments = (props) => {
           headers={headers}
           dropdownLists={{locations,capabilities}}
         />
-        {/* </DataContext.Provider> */}
       </>
     );
   };

@@ -5,19 +5,14 @@ import * as vehiclesAPI from "./vehicles-api";
 export async function getVehicles() {
   try {
     const data = await vehiclesAPI.index();
-    // console.log(data)
     const modifiedData = data.map(item => ({
         ...item,
         earliest_start: isoToDatetimeLocal(item.earliest_start),
         latest_end: isoToDatetimeLocal(item.latest_end),
         routing_profile: item.routing_profile.replace("mapbox/", ""),
-        // start_location: item.start_location.name,
-        // end_location: item.end_location.name,
         capabilities: item.capabilities[0],
-        // capacities: item.capacities.name,
         breaks: item.breaks[0],
       }));
-    // console.log(modifiedData)
     return modifiedData;
   } catch (err) {
     console.log(err);

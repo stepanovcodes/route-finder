@@ -95,17 +95,11 @@ const Problems = (props) => {
   async function handleGet() {
     try {
       const problemsData = await getProblems();
-      //  console.log(problemsData);
-      // if (problemsData.length) {
       setProblems(problemsData);
       setIsProblemsLoading(false);
-      // } else {
-      //   setIsProblemsLoading(false);
-      //   throw Error(problemsData);
-      // }
 
       const vehiclesData = await getVehicles();
-      // if (vehiclesData.length) {
+
       setVehicles(
         vehiclesData.map(({ _id, name, start_location, end_location }) => ({
           _id,
@@ -115,12 +109,9 @@ const Problems = (props) => {
         }))
       );
       setIsVehiclesLoading(false);
-      // } else {
-      //   setIsVehiclesLoading(false);
-      //   throw Error(vehiclesData);
-      // }
+
       const servicesData = await getServices();
-      // if (servicesData.length) {
+
       setServices(
         servicesData.map(({ _id, name, location }) => ({
           _id,
@@ -129,12 +120,8 @@ const Problems = (props) => {
         }))
       );
       setIsServicesLoading(false);
-      // } else {
-      //   setIsServicesLoading(false);
-      //   throw Error(servicesData);
-      // }
+
       const shipmentsData = await getShipments();
-      // if (shipmentsData.length) {
       setShipments(
         shipmentsData.map(({ _id, name, from, to }) => ({
           _id,
@@ -144,23 +131,9 @@ const Problems = (props) => {
         }))
       );
       setIsShipmentsLoading(false);
-      // } else {
-      //   setIsShipmentsLoading(false);
-      //   throw Error(shipmentsData);
-      // }
-
       const submissionsData = await getSubmissions();
-      // console.log (submissionsData)
-      // console.log (problemsData)
-      // setSubmissions(submissionsData);
-      // if (submissionsData.length) {
       setSubmissions(submissionsData);
       setIsSubmissionsLoading(false);
-      // console.log(submissionsData)
-      // } else {
-      //   setIsSubmissionsLoading(false);
-      //   throw Error(submissionsData);
-      // }
     } catch (err) {
       console.log({ err: err.message });
     }
@@ -199,8 +172,6 @@ const Problems = (props) => {
       const problemDataModified = replaceNestedObjectNames(
         removeIdKeys(problemData)
       );
-      // console.log(problemData)
-      // console.log(JSON.stringify(problemDataModified));
       const res = await submitProblem(problemDataModified);
       await pushSubmission(id, res);
       handleGet();
@@ -219,7 +190,6 @@ const Problems = (props) => {
         <h1 className="text-2xl font-bold tracking-tight">
           {title.toUpperCase()}
         </h1>
-        {/* <DataContext.Provider value={locations}> */}
         <ProblemList
           inputArray={problems}
           submissions={submissions}
@@ -228,9 +198,8 @@ const Problems = (props) => {
           handleUpdate={handleUpdate}
           handleSubmitProblem={handleSubmitProblem}
           headers={headers}
-          dropdownLists={{ /*locations,*/ vehicles, services, shipments }}
+          dropdownLists={{ vehicles, services, shipments }}
         />
-        {/* </DataContext.Provider> */}
       </>
     );
   };
@@ -241,7 +210,7 @@ const Problems = (props) => {
     </div>
   );
 
-  return isProblemsLoading /*|| isLocationsLoading*/ ||
+  return isProblemsLoading ||
     isVehiclesLoading ||
     isServicesLoading ||
     isShipmentsLoading ||

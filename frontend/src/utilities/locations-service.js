@@ -5,7 +5,6 @@ import * as locationsAPI from "./locations-api";
 export async function getLocations() {
   try {
     const data = await locationsAPI.index();
-    // console.log(data)
     return data;
   } catch (err) {
     console.log(err);

@@ -8,7 +8,6 @@ import { getShipments } from "./shipments-service";
 export async function getProblems() {
   try {
     const data = await problemsAPI.index();
-    // console.log('data:', data)
     const modifiedData = data.map((item) => ({
       ...item,
       objectives: item.options.objectives[0],
@@ -22,7 +21,6 @@ export async function getProblems() {
         return { value: _id,  label: name};
       }),
     }));
-    // console.log('modifiedData:', modifiedData)
     return modifiedData;
   } catch (err) {
     console.log(err);
@@ -33,8 +31,6 @@ export async function getProblems() {
 export async function getProblem(id) {
   try {
     const data = await problemsAPI.show(id);
-    //  console.log('data:', data)
-    //  console.log('id:', id)
     return data;
   } catch (err) {
     console.log(err);
@@ -73,7 +69,6 @@ export async function createProblem(data) {
     }
     const input = {services,shipments, vehicles};
 
-    // console.log("data:", data);
     const modifiedData = {
       ...data,
       options: { objectives: [data.objectives] },
@@ -91,7 +86,6 @@ export async function createProblem(data) {
       submissions: [{id: null, status: null}]
     };
 
-    // console.log("modifiedData:", modifiedData);
     const newProblem = await problemsAPI.create(modifiedData);
     return newProblem;
   } catch (err) {
@@ -139,7 +133,6 @@ export async function updateProblem(id, data) {
     }
     const input = {services,shipments, vehicles};
 
-    // console.log("data:", data);
     const modifiedData = {
       ...data,
       options: { objectives: [data.objectives] },
@@ -155,7 +148,6 @@ export async function updateProblem(id, data) {
       locations: locationsBuilder(data, input),
       submissions: [{id: null, status: null}]
     };
-    // console.log("modifiedData:", modifiedData);
     const updatedProblem = await problemsAPI.update(id, modifiedData);
     return updatedProblem;
   } catch (err) {
@@ -168,7 +160,6 @@ export async function pushSubmission(id, data) {
     const modifiedData = {
       submissions: data
     };
-    // console.log("modifiedData:", modifiedData);
     const updatedProblem  = await problemsAPI.update(id, modifiedData);
     return updatedProblem;
   } catch (err) {

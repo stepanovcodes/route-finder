@@ -17,7 +17,6 @@ function ProblemList({
   function handleEdit(isEditing) {
     isEditing ? setHideIcons(true) : setHideIcons(false);
   }
-  // console.log(inputArray)
   return (
     <>
       <table>

@@ -37,13 +37,8 @@ const Settings = (props) => {
   async function handleCapacitiesGet() {
     try {
       const capacitiesData = await getCapacities();
-      // if (capacitiesData.length) {
         setCapacities(capacitiesData);
         setIsCapacitiesLoading(false);
-      // } else {
-      //   setIsCapacitiesLoading(false);
-      //   throw Error(capacitiesData);
-      // }
     } catch (err) {
       console.log({ err: err.message });
     }
@@ -52,13 +47,8 @@ const Settings = (props) => {
   async function handleCapabilitiesGet() {
     try {
       const capabilitiesData = await getCapabilities();
-      // if (capabilitiesData.length) {
         setCapabilities(capabilitiesData);
         setIsCapabilitiesLoading(false);
-      // } else {
-      //   setIsCapabilitiesLoading(false);
-      //   throw Error(capabilitiesData);
-      // }
     } catch (err) {
       console.log({ err: err.message });
     }
@@ -67,13 +57,8 @@ const Settings = (props) => {
   async function handleBreaksGet() {
     try {
       const breaksData = await getBreaks();
-      // if (breaksData.length) {
         setBreaks(breaksData);
         setIsBreaksLoading(false);
-      // } else {
-      //   setIsBreaksLoading(false);
-      //   throw Error(breaksData);
-      // }
     } catch (err) {
       console.log({ err: err.message });
     }

@@ -1,6 +1,5 @@
-import { useState /*useContext*/ } from "react";
+import { useState } from "react";
 import { Button } from "@fluentui/react-components";
-// import {DataContext} from "../../data/DataContext"
 import Select from "react-select";
 import "./NewRowProblemItem.css";
 
@@ -18,7 +17,6 @@ function getCurrentDateTime() {
 }
 
 function NewRowProblemItem({ handleCreate, headers, dropdownLists }) {
-  // console.log(dropdownLists)
 
   const initialAddRow = Object.fromEntries(
     headers.map((header) => {
@@ -120,65 +118,19 @@ function NewRowProblemItem({ handleCreate, headers, dropdownLists }) {
       return defaultSelection;
     })
   );
-//   initialAddRow.submissions= { id: "", status: "" };
-  // console.log(initialAddRow)
+
   const [newRow, setNewRow] = useState(initialAddRow);
-  // const locations = useContext(DataContext);
 
   function handleMultiSelectChange(e, metadata) {
     setNewRow({ ...newRow, [metadata.name]: e });
-
-    // console.log(e);
-    // console.log(newRow);
   }
   function handleChange(e) {
     setNewRow({ ...newRow, [e.target.name]: e.target.value });
-    // console.log(e);
-    // console.log(newRow);
-
-    // Custom validation logic
-    // if (e.target.name === "latitude") {
-    //   if (isNaN(e.target.value) || parseFloat(e.target.value) < -90 || parseFloat(e.target.value) > 90) {
-    //     // Invalid latitude
-    //     e.target.setCustomValidity("Latitude must be between -90 and 90.");
-    //   } else {
-    //     // Valid latitude
-    //     e.target.setCustomValidity("");
-    //   }
-    // } else if (e.target.name === "longitude") {
-    //   if (isNaN(e.target.value) || parseFloat(e.target.value) < -180 || parseFloat(e.target.value) > 180) {
-    //     // Invalid latitude
-    //     e.target.setCustomValidity("Longitude must be between -180 and 180.");
-    //   } else {
-    //     // Valid latitude
-    //     e.target.setCustomValidity("");
-    //   }
-    // } else if (!e.target.value) {
-    //   e.target.setCustomValidity(`${e.target.name} required.`)
-    // }
   }
 
   async function handleAddRow(e) {
-    // const nameInput = document.getElementById("input-name-new");
-    // const latitudeInput = document.getElementById("input-latitude-new");
-    // const longitudeInput = document.getElementById("input-longitude-new");
-
-    // Check the validity of each field
-    // const isNameValid = nameInput.checkValidity();
-    // const isLatitudeValid = latitudeInput.checkValidity();
-    // const isLongitudeValid = longitudeInput.checkValidity();
-    // console.log(`isNameValid = ${isNameValid}, isLatitudeValid = ${isLatitudeValid}, isLongitudeValid = ${isLongitudeValid}`)
-    // if (isNameValid && isLatitudeValid && isLongitudeValid) {
-    //   handleValidation(true)
-    // Initialize an object to store key mappings for location fields
-
     handleCreate(newRow);
     setNewRow(initialAddRow);
-    // } else {
-    //   // setIsValid(false)
-    //   handleValidation(false)
-    //   // console.log(`isNameValid = ${isNameValid}, isLatitudeValid = ${isLatitudeValid}, isLongitudeValid = ${isLongitudeValid}`)
-    // }
   }
 
   return (
@@ -315,7 +267,6 @@ function NewRowProblemItem({ handleCreate, headers, dropdownLists }) {
               header === "shipments" ? (
               <div className="w-full border-2 rounded focus:outline-none focus:border-blue-500 control-height">
                 <Select
-                  // defaultValue={dropdownLists[header].map(({_id, name}) =>{return {value: _id, label: name}})[0]}
                   isMulti
                   name={header}
                   value={newRow[header]}

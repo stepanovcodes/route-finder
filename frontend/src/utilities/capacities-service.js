@@ -5,7 +5,6 @@ import * as capacitiesAPI from "./capacities-api";
 export async function getCapacities() {
   try {
     const data = await capacitiesAPI.index();
-    // console.log(data)
     return data;
   } catch (err) {
     console.log(err);

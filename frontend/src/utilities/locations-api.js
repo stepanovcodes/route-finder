@@ -31,9 +31,7 @@ export async function destroy(id) {
   const res = await fetch(url, {
     method: "DELETE",
   });
-//   console.log(res, res.ok);
   if (res.ok) {
-    // return res.json();
   } else {
     throw new Error("Invalid Request");
   }

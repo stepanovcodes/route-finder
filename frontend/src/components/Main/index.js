@@ -1,12 +1,13 @@
 import { Routes, Route } from "react-router-dom";
 import Locations from "../../pages/Locations/";
 import Settings from "../../pages/Settings";
-import NotFound404 from '../../pages/NotFound404'
+import NotFound404 from "../../pages/NotFound404";
 import Vehicles from "../../pages/Vehicles";
 import Services from "../../pages/Services";
 import Shipments from "../../pages/Shipments";
 import Problems from "../../pages/Problems";
 import Solutions from "../../pages/Solutions";
+import Home from "../../pages/Home";
 
 const Main = () => {
   return (
@@ -19,7 +20,8 @@ const Main = () => {
         <Route path="/shipments" element={<Shipments />} />
         <Route path="/problems" element={<Problems />} />
         <Route path="/solutions" element={<Solutions />} />
-        <Route path="/*" element={<NotFound404/>}/>
+        <Route path="/" element={<Home />} />
+        <Route path="/*" element={<NotFound404 />} />
       </Routes>
     </main>
   );
