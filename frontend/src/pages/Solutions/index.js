@@ -1,4 +1,6 @@
-import mapboxgl from "mapbox-gl";
+import mapboxgl from 'mapbox-gl';
+// // eslint-disable-next-line import/no-webpack-loader-syntax
+// mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 // import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp';
 // import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker'; // Load worker code separately with worker-loader
 import React, { useEffect, useRef, useState } from "react";
@@ -15,8 +17,6 @@ import { getSolution } from "../../utilities/mapbox-service";
 import SolutionCard from "../../components/SolutionCard";
 import "./Solutions.css";
 
-
-// mapboxgl.workerClass = MapboxWorker; // Wire up loaded worker to be used instead of the default
 mapboxgl.accessToken = process.env.REACT_APP_ACCESS_TOKEN;
 
 const ContrastColors = [
