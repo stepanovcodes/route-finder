@@ -71,7 +71,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 - Add Favicon to the app
 - Implement client-side validation and alerts (e.g., for errors)
 - Clearly indicate required fields and disallow optional fields
-- Specify unitsin table headers for parameters (e.g., use seconds for breaks)
+- Specify units in table headers for parameters (e.g., use seconds for breaks)
 - Ensure that when deleting the last row in the app, the page does not freeze
 - Explore other viable Mapbox APIs
 - Conceal advanced settings on each page to reduce table size.
